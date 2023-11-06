@@ -28,6 +28,12 @@ sysinfo.txt
 *.pidb
 .DS_Store
 
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
 ###
 # OS generated
 ###
