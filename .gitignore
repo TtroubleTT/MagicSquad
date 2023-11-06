@@ -11,8 +11,8 @@
 [Oo]bj/
 [Tt]emp/
 [Uu]nityGenerated/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
 # file on crash reports
 sysinfo.txt
 
