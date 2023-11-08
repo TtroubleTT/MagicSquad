@@ -1,4 +1,4 @@
-# This .gitignore file should be placed at the root of your Unity project directory
+﻿# This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
@@ -24,7 +24,7 @@
 [Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
-.vs/
+/.vs/
 
 # Gradle cache directory
 .gradle/
@@ -70,3 +70,10 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 [Aa]ssets/[Ss]treamingAssets/aa.meta
 [Aa]ssets/[Ss]treamingAssets/aa/*
+Magic Squad/Logs/shadercompiler-UnityShaderCompiler.exe0.log
+Magic Squad/UserSettings/Layouts/default-2022.dwlt
+Magic Squad/UserSettings/Layouts/default-2022.dwlt
+*.dwlt
+*.dwlt
+*.log
+*.dwlt
