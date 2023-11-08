@@ -1,66 +1,152 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private CharacterController controller;
-
+    [SerializeField] private CharacterController controller;
     
-    // Speed of player movement
-    [SerializeField]
-    private float speed = 12f;
-
-    // How powerful gravity is
-    [SerializeField]
-    private float gravity = - 9.81f;
-
-    [SerializeField] 
-    private float jumpHeight = 3f;
-
+    [Header("Speed")]
+    [SerializeField] private float walkSpeed = 12f;
+    [SerializeField] private float sprintSpeed = 20f;
+    [SerializeField] private float crouchSpeed = 5f;
+    private float _currentSpeed;
     
-    [SerializeField] 
-    private Transform groundCheck;
+    [Header("Key binds")]
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
+    [SerializeField] private KeyCode crouchKey = KeyCode.LeftControl;
 
-    [SerializeField] 
-    private float groundDistance = 0.4f;
-
-    [SerializeField] 
-    public LayerMask groundMask;
+    [Header("Ground Check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance = 0.4f;
+    [SerializeField] public LayerMask groundMask;
     
+    [Header("Physics")]
+    [SerializeField] private float gravity = - 9.81f;
+
+    [Header("Jumping")]
+    [SerializeField] private float jumpHeight = 3f;
+
+    [Header("Crouching")] 
+    [SerializeField] private float crouchYScale;
+    private float _startYScale;
+    
+
     // Velocity of movement
     private Vector3 _velocity;
+    
     private bool _isGrounded;
+    
+    // Current Movement State
+    private MovementState _movementState;
 
-    // Update is called once per frame
-    private void Update()
+    public enum MovementState
     {
-        // Resets falling velocity if they are no longer falling
+        Walking,
+        Sprinting,
+        Crouching,
+        Air,
+    }
+
+    private void MovementStateHandler()
+    {
+        if (Input.GetKey(crouchKey))
+        {
+            _movementState = MovementState.Crouching;
+            _currentSpeed = crouchSpeed;
+        }
+        else if (_isGrounded && Input.GetKey(sprintKey))
+        {
+            _movementState = MovementState.Sprinting;
+            _currentSpeed = sprintSpeed;
+        }
+        else if (_isGrounded)
+        {
+            _movementState = MovementState.Walking;
+            _currentSpeed = walkSpeed;
+        }
+        else
+        {
+            _movementState = MovementState.Air;
+        }
+    }
+
+    private void ResetVelocity()
+    {
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
         }
-        
-        // Movement
+    }
+
+    private void MoveInDirection()
+    {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         
         Transform myTransform = transform;
         Vector3 move = myTransform.right * x + myTransform.forward * z; // This makes it so its moving locally so rotation is taken into consideration
 
-        controller.Move(move * (speed * Time.deltaTime)); // Moving in the direction of move at the speed
+        controller.Move(move * (_currentSpeed * Time.deltaTime)); // Moving in the direction of move at the speed
+    }
 
+    private void CheckJump()
+    {
         // Physics stuff for jumping
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetKey(jumpKey) && _isGrounded && _movementState != MovementState.Crouching)
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
 
-        // Gravity stuff
+    private void CheckCrouch()
+    {
+        Vector3 localScale = transform.localScale;
+        
+        if (Input.GetKeyDown(crouchKey))
+        {
+            transform.localScale = new Vector3(localScale.x, crouchYScale, localScale.z);
+        }
+
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
+        }
+    }
+
+    private void Gravity()
+    {
         _velocity.y += gravity * Time.deltaTime;
         controller.Move(_velocity * Time.deltaTime);
+    }
+
+    private void Start()
+    {
+        _startYScale = transform.localScale.y;
+    }
+
+    private void Update()
+    {
+        // Handles what movement state we are in
+        MovementStateHandler();
+        
+        // Resets falling velocity if they are no longer falling
+        ResetVelocity();
+        
+        // Movement
+        MoveInDirection();
+
+        // Jumping
+        CheckJump();
+        
+        // Crouching
+        CheckCrouch();
+
+        // Gravity
+        Gravity();
     }
 }
