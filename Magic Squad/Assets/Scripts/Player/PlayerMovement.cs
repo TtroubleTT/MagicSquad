@@ -6,20 +6,30 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private CharacterController controller;
-
     
-    // Speed of player movement
-    [SerializeField]
-    private float speed = 12f;
+    // Speed variables
+    [SerializeField] 
+    private float walkSpeed = 12f;
 
-    // How powerful gravity is
+    [SerializeField] 
+    private float sprintSpeed = 20f;
+    
+    private float _currentSpeed = 12f;
+    
+    // Key bind variables
+    [SerializeField] 
+    private KeyCode jumpKey = KeyCode.Space;
+
+    [SerializeField] 
+    private KeyCode sprintKey = KeyCode.LeftShift;
+
+    // Gravity and Jumping Variables
     [SerializeField]
     private float gravity = - 9.81f;
 
     [SerializeField] 
     private float jumpHeight = 3f;
 
-    
     [SerializeField] 
     private Transform groundCheck;
 
@@ -31,11 +41,42 @@ public class PlayerMovement : MonoBehaviour
     
     // Velocity of movement
     private Vector3 _velocity;
+    
     private bool _isGrounded;
+    
+    // Current Movement State
+    private MovementState _movementState;
 
-    // Update is called once per frame
+    public enum MovementState
+    {
+        Walking,
+        Sprinting,
+        Air,
+    }
+
+    private void MovementStateHandler()
+    {
+        if (_isGrounded && Input.GetKey(sprintKey))
+        {
+            _movementState = MovementState.Sprinting;
+            _currentSpeed = sprintSpeed;
+        }
+        else if (_isGrounded)
+        {
+            _movementState = MovementState.Walking;
+            _currentSpeed = walkSpeed;
+        }
+        else
+        {
+            _movementState = MovementState.Air;
+        }
+    }
+    
     private void Update()
     {
+        // Handles what movement state we are in
+        MovementStateHandler();
+        
         // Resets falling velocity if they are no longer falling
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -51,10 +92,10 @@ public class PlayerMovement : MonoBehaviour
         Transform myTransform = transform;
         Vector3 move = myTransform.right * x + myTransform.forward * z; // This makes it so its moving locally so rotation is taken into consideration
 
-        controller.Move(move * (speed * Time.deltaTime)); // Moving in the direction of move at the speed
+        controller.Move(move * (_currentSpeed * Time.deltaTime)); // Moving in the direction of move at the speed
 
         // Physics stuff for jumping
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetKey(jumpKey) && _isGrounded)
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
