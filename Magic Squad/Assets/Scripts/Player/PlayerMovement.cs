@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
-    [SerializeField] private float startYScale;
+    private float _startYScale;
     
 
     // Velocity of movement
@@ -45,12 +46,18 @@ public class PlayerMovement : MonoBehaviour
     {
         Walking,
         Sprinting,
+        Crouching,
         Air,
     }
 
     private void MovementStateHandler()
     {
-        if (_isGrounded && Input.GetKey(sprintKey))
+        if (Input.GetKey(crouchKey))
+        {
+            _movementState = MovementState.Crouching;
+            _currentSpeed = crouchSpeed;
+        }
+        else if (_isGrounded && Input.GetKey(sprintKey))
         {
             _movementState = MovementState.Sprinting;
             _currentSpeed = sprintSpeed;
@@ -90,9 +97,22 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         // Physics stuff for jumping
-        if (Input.GetKey(jumpKey) && _isGrounded)
+        if (Input.GetKey(jumpKey) && _isGrounded && _movementState != MovementState.Crouching)
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
+
+    private void CheckCrouch()
+    {
+        if (Input.GetKeyDown(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+        }
+
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, _startYScale, transform.localScale.z);
         }
     }
 
@@ -101,7 +121,12 @@ public class PlayerMovement : MonoBehaviour
         _velocity.y += gravity * Time.deltaTime;
         controller.Move(_velocity * Time.deltaTime);
     }
-    
+
+    private void Start()
+    {
+        _startYScale = transform.localScale.y;
+    }
+
     private void Update()
     {
         // Handles what movement state we are in
@@ -115,6 +140,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Jumping
         CheckJump();
+        
+        // Crouching
+        CheckCrouch();
 
         // Gravity
         Gravity();
