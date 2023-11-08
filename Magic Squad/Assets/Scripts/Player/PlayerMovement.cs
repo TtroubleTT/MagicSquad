@@ -105,14 +105,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckCrouch()
     {
+        Vector3 localScale = transform.localScale;
+        
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            transform.localScale = new Vector3(localScale.x, crouchYScale, localScale.z);
         }
 
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, _startYScale, transform.localScale.z);
+            transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
         }
     }
 
