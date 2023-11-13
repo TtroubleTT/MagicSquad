@@ -239,7 +239,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 4c5c0000
       m_LastClickedID: 23628
-      m_ExpandedIDs: 2efbffff
+      m_ExpandedIDs: 2efbffff4c5c0000825c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -282,8 +282,8 @@ MonoBehaviour:
     y: 0
     width: 565
     height: 561
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -658,9 +658,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.3070917, y: 11.471214, z: 5.915965}
+    m_Target: {x: -0.5144663, y: 11.0566845, z: 1.4950619}
     speed: 2
-    m_Value: {x: -5.3070917, y: 11.471214, z: 5.915965}
+    m_Value: {x: -0.5144663, y: 11.0566845, z: 1.4950619}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -706,13 +706,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.119607836, y: 0.2666711, z: -0.03337006, w: 0.9557289}
+    m_Target: {x: 0.08907365, y: 0.59079486, z: -0.065846756, w: 0.79915196}
     speed: 2
-    m_Value: {x: 0.11961078, y: 0.26667765, z: -0.033370882, w: 0.95575243}
+    m_Value: {x: 0.089075774, y: 0.5908089, z: -0.06584833, w: 0.79917103}
   m_Size:
-    m_Target: 9.513369
+    m_Target: 8.588995
     speed: 2
-    m_Value: 9.513369
+    m_Value: 8.588995
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -756,8 +756,8 @@ MonoBehaviour:
     y: 0
     width: 538
     height: 561
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -835,7 +835,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Player
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -843,16 +843,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Player
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Unity\Projects\MagicSquad\Magic Squad
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: fa5c0000
-    m_LastClickedID: 23802
-    m_ExpandedIDs: 00000000e25c0000f05c000000ca9a3b
+    m_SelectedIDs: e65c0000
+    m_LastClickedID: 23782
+    m_ExpandedIDs: 00000000e65c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -880,7 +880,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e25c0000
+    m_ExpandedIDs: 00000000e65c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 4c5c0000
     m_LastClickedInstanceID: 23628
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

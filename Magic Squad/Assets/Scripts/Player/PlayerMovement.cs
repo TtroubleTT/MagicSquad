@@ -32,11 +32,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
     private float _startYScale;
+
+    [Header("WallRunning")] 
+    public float wallRunSpeed;
+    public bool wallRunning;
     
 
     // Velocity of movement
-    private Vector3 _velocity;
-    
+    public Vector3 velocity;
+    public bool useGravity = true;
     private bool _isGrounded;
     
     // Current Movement State
@@ -46,12 +50,18 @@ public class PlayerMovement : MonoBehaviour
     {
         Walking,
         Sprinting,
+        WallRunning,
         Crouching,
         Air,
     }
 
     private void MovementStateHandler()
     {
+        if (wallRunning)
+        {
+            _movementState = MovementState.WallRunning;
+            _currentSpeed = wallRunSpeed;
+        }
         if (Input.GetKey(crouchKey))
         {
             _movementState = MovementState.Crouching;
@@ -77,9 +87,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (_isGrounded && _velocity.y < 0)
+        if (_isGrounded && velocity.y < 0)
         {
-            _velocity.y = -2f;
+            velocity.y = -2f;
         }
     }
 
@@ -99,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         // Physics stuff for jumping
         if (Input.GetKey(jumpKey) && _isGrounded && _movementState != MovementState.Crouching)
         {
-            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 
@@ -120,8 +130,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
-        _velocity.y += gravity * Time.deltaTime;
-        controller.Move(_velocity * Time.deltaTime);
+        if (useGravity)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 
     private void Start()
