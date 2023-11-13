@@ -98,6 +98,10 @@ public class WallRunning : MonoBehaviour
         Vector3 wallNormal = _wallRight ? _rightWallHit.normal : _leftWallHit.normal; // If its a right wall use the right walls vector if not use the left walls.
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
+        // Makes it so your forward direction is decided by where you are facing.
+        if ((orientation.forward - wallForward).magnitude > (orientation.forward + wallForward).magnitude)
+            wallForward = -wallForward;
+
         controller.Move(wallForward * wallRunForce);
     }
 
