@@ -102,7 +102,10 @@ public class WallRunning : MonoBehaviour
         if ((orientation.forward - wallForward).magnitude > (orientation.forward + wallForward).magnitude)
             wallForward = -wallForward;
 
+        // forward force on wall
         controller.Move(wallForward * wallRunForce);
+
+        // If having problem sticking to wall push to wall
     }
 
     private void StopWallRun()
