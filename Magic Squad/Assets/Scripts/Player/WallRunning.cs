@@ -11,10 +11,14 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float wallRunForce;
     [SerializeField] private float maxWallRunTime;
+    [SerializeField] private float wallClimbSpeed;
     private float _wallRunTimer;
 
     [Header("Input")] 
-    
+    [SerializeField] private KeyCode upwardsRunKey = KeyCode.LeftShift;
+    [SerializeField] private KeyCode downwardsRunKey = KeyCode.LeftControl;
+    private bool _upwardsRunning;
+    private bool _downwardsRunning;
     private float _horizontalInput;
     private float _verticalInput;
 
@@ -73,6 +77,10 @@ public class WallRunning : MonoBehaviour
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
 
+        _upwardsRunning = Input.GetKey(upwardsRunKey);
+        _downwardsRunning = Input.GetKey(downwardsRunKey);
+
+        // Decides whether it needs to start or stop the wall run
         if ((_wallLeft || _wallRight) && _verticalInput > 0 && IsInAir()) // If theres either a wall on left or right and we are in air and have upwards vertical input.
         {
             if (!_playerMovement.wallRunning)
@@ -89,6 +97,12 @@ public class WallRunning : MonoBehaviour
     {
         _playerMovement.wallRunning = true;
     }
+    
+    private void StopWallRun()
+    {
+        _playerMovement.wallRunning = false;
+        _playerMovement.useGravity = true;
+    }
 
     private void WallRunningMovement()
     {
@@ -104,13 +118,20 @@ public class WallRunning : MonoBehaviour
 
         // forward force on wall
         controller.Move(wallForward * wallRunForce);
+        
+        // Upwards and downwards running
+        if (_upwardsRunning)
+        {
+            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, wallClimbSpeed, _playerMovement.velocity.z);
+            controller.Move(_playerMovement.velocity * Time.deltaTime);
+        }
+
+        if (_downwardsRunning)
+        {
+            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, -wallClimbSpeed, _playerMovement.velocity.z);
+            controller.Move(_playerMovement.velocity * Time.deltaTime);
+        }
 
         // If having problem sticking to wall push to wall
-    }
-
-    private void StopWallRun()
-    {
-        _playerMovement.wallRunning = false;
-        _playerMovement.useGravity = true;
     }
 }
