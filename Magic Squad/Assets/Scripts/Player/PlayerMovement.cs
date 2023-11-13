@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrounded;
     
     // Current Movement State
-    private MovementState _movementState;
+    public MovementState movementState;
 
     public enum MovementState
     {
@@ -54,32 +54,58 @@ public class PlayerMovement : MonoBehaviour
         Crouching,
         Air,
     }
+    
+    private void Start()
+    {
+        _startYScale = transform.localScale.y;
+    }
+
+    private void Update()
+    {
+        // Handles what movement state we are in
+        MovementStateHandler();
+        
+        // Resets falling velocity if they are no longer falling
+        ResetVelocity();
+        
+        // Movement
+        MoveInDirection();
+
+        // Jumping
+        CheckJump();
+        
+        // Crouching
+        CheckCrouch();
+
+        // Gravity
+        Gravity();
+    }
 
     private void MovementStateHandler()
     {
         if (wallRunning)
         {
-            _movementState = MovementState.WallRunning;
+            movementState = MovementState.WallRunning;
             _currentSpeed = wallRunSpeed;
         }
-        if (Input.GetKey(crouchKey))
+        else if (Input.GetKey(crouchKey))
         {
-            _movementState = MovementState.Crouching;
+            movementState = MovementState.Crouching;
             _currentSpeed = crouchSpeed;
         }
         else if (_isGrounded && Input.GetKey(sprintKey))
         {
-            _movementState = MovementState.Sprinting;
+            movementState = MovementState.Sprinting;
             _currentSpeed = sprintSpeed;
         }
         else if (_isGrounded)
         {
-            _movementState = MovementState.Walking;
+            movementState = MovementState.Walking;
             _currentSpeed = walkSpeed;
         }
         else
         {
-            _movementState = MovementState.Air;
+            movementState = MovementState.Air;
         }
     }
 
@@ -107,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         // Physics stuff for jumping
-        if (Input.GetKey(jumpKey) && _isGrounded && _movementState != MovementState.Crouching)
+        if (Input.GetKey(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -117,12 +143,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 localScale = transform.localScale;
         
-        if (Input.GetKeyDown(crouchKey))
+        if (Input.GetKeyDown(crouchKey) && movementState == MovementState.Crouching)
         {
             transform.localScale = new Vector3(localScale.x, crouchYScale, localScale.z);
         }
 
-        if (Input.GetKeyUp(crouchKey))
+        if (Input.GetKeyUp(crouchKey) && movementState == MovementState.Crouching)
         {
             transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
         }
@@ -135,31 +161,5 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
-    }
-
-    private void Start()
-    {
-        _startYScale = transform.localScale.y;
-    }
-
-    private void Update()
-    {
-        // Handles what movement state we are in
-        MovementStateHandler();
-        
-        // Resets falling velocity if they are no longer falling
-        ResetVelocity();
-        
-        // Movement
-        MoveInDirection();
-
-        // Jumping
-        CheckJump();
-        
-        // Crouching
-        CheckCrouch();
-
-        // Gravity
-        Gravity();
     }
 }

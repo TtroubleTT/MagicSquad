@@ -96,6 +96,7 @@ public class WallRunning : MonoBehaviour
     private void StartWallRun()
     {
         _playerMovement.wallRunning = true;
+        _playerMovement.useGravity = false;
     }
     
     private void StopWallRun()
@@ -106,9 +107,6 @@ public class WallRunning : MonoBehaviour
 
     private void WallRunningMovement()
     {
-        _playerMovement.useGravity = false;
-        _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, 0f, _playerMovement.velocity.z);
-
         Vector3 wallNormal = _wallRight ? _rightWallHit.normal : _leftWallHit.normal; // If its a right wall use the right walls vector if not use the left walls.
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
@@ -120,6 +118,13 @@ public class WallRunning : MonoBehaviour
         controller.Move(wallForward * wallRunForce);
         
         // Upwards and downwards running
+        UpAndDownWallRunning();
+
+        // If having problem sticking to wall push to wall
+    }
+
+    private void UpAndDownWallRunning()
+    {
         if (_upwardsRunning)
         {
             _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, wallClimbSpeed, _playerMovement.velocity.z);
@@ -131,7 +136,5 @@ public class WallRunning : MonoBehaviour
             _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, -wallClimbSpeed, _playerMovement.velocity.z);
             controller.Move(_playerMovement.velocity * Time.deltaTime);
         }
-
-        // If having problem sticking to wall push to wall
     }
 }
