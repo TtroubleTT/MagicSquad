@@ -6,12 +6,19 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
     [SerializeField]
-    private float mouseSensitivity = 100f;
+    private float mouseXSensitivity = 100f;
+    
+    [SerializeField]
+    private float mouseYSensitivity = 100f;
 
     [SerializeField]
     private Transform playerBody;
 
     private float _xRotation = 0f;
+    
+    // Code has been inspired and modified a bit based on these tutorials
+    // https://www.youtube.com/watch?v=f473C43s8nE&t=505s
+    // https://www.youtube.com/watch?v=_QajrabyTJc
     
     void Start()
     {
@@ -20,8 +27,8 @@ public class MouseLook : MonoBehaviour
     
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity* Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseXSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseYSensitivity * Time.deltaTime;
 
         // Looking up and down
         _xRotation -= mouseY;

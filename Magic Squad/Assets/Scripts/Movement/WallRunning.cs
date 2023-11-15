@@ -37,6 +37,10 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private CharacterController controller;
     private PlayerMovement _playerMovement;
 
+    // Code has been inspired and modified a bit based on these tutorials
+    // https://www.youtube.com/watch?v=gNt9wBOrQO4
+    // https://www.youtube.com/watch?v=WfW0k5qENxM&t=72s
+    
     private void Start()
     {
         // Gets our player movement script
