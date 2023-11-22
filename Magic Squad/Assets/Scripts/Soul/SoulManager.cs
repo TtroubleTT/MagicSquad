@@ -2,27 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Souls : MonoBehaviour
+public class SoulManager : MonoBehaviour
 {
     [SerializeField]
-    private float _maxSoul = 100;
+    private float maxSoul = 100;
 
     [SerializeField]
-    private float _minSoul = 0;
+    private float minSoul = 0;
 
     [SerializeField]
-    private float _currentSoul = 0;
+    private float currentSoul = 0;
 
     public void AddSoul(float amount)
     {
-        if (amount + _currentSoul > _maxSoul)
+        if (amount + currentSoul > maxSoul)
         {
-            _currentSoul = _maxSoul;
+            currentSoul = maxSoul;
         }
         else
         {
-            _currentSoul = _currentSoul + amount;
+            currentSoul = currentSoul + amount;
         }
+    }
+
+    public float GetMaxSoul()
+    {
+        return maxSoul;
+    }
+
+    public float GetCurrentSoul()
+    {
+        return currentSoul;
     }
 }
 
