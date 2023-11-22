@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField]
-    private float mouseXSensitivity = 100f;
-    
-    [SerializeField]
-    private float mouseYSensitivity = 100f;
+    [Header("Sensitivity")]
+    [SerializeField] private float mouseXSensitivity = 100f;
+    [SerializeField] private float mouseYSensitivity = 100f;
 
-    [SerializeField]
-    private Transform playerBody;
+    [Header("References")]
+    [SerializeField] private Transform orientation;
 
-    private float _xRotation = 0f;
+    // Rotations
+    private float _xRotation;
+    private float _yRotation;
     
     // Code has been inspired and modified a bit based on these tutorials
     // https://www.youtube.com/watch?v=f473C43s8nE&t=505s
@@ -23,20 +23,21 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseXSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseYSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxisRaw("Mouse X") * mouseXSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * mouseYSensitivity * Time.deltaTime;
 
-        // Looking up and down
+        //Rotation based on mouse input
+        _yRotation += mouseX;
         _xRotation -= mouseY;
         _xRotation = Math.Clamp(_xRotation, -90f, 90f); // Makes it so we can only look right above us and not flip our entire camera
-
-        transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f); // Its rotating about the x axis aka up and down
         
-        // Looking right and left
-        playerBody.Rotate(Vector3.up * mouseX);
+        // rotate cam and body
+        transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, _yRotation, 0); // rotates about the y axis aka left and right
     }
 }
