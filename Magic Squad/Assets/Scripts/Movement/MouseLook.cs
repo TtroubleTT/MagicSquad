@@ -10,7 +10,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float mouseYSensitivity = 100f;
 
     [Header("References")]
-    [SerializeField] private Transform orientation;
+    [SerializeField] private Transform playerBody;
 
     // Rotations
     private float _xRotation;
@@ -38,6 +38,6 @@ public class MouseLook : MonoBehaviour
         
         // rotate cam and body
         transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, _yRotation, 0); // rotates about the y axis aka left and right
+        playerBody.rotation = Quaternion.Euler(0, _yRotation, 0); // rotates about the y axis aka left and right
     }
 }
