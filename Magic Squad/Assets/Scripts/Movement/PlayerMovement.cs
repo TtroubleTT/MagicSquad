@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private CharacterController controller;
+    [Header("References")]
+    [SerializeField] private Transform playerBody;
     
     [Header("Speed")]
     [SerializeField] private float walkSpeed = 12f;
@@ -29,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] private float jumpHeight = 3f;
 
+    [SerializeField] private float jumpForce;
+
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
     private float _startYScale;
@@ -36,6 +39,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("WallRunning")] 
     public float wallRunSpeed;
     public bool wallRunning;
+    
+    // Input
+    private float _horizontalInput;
+    private float _verticalInput;
+
+    private Vector3 _moveDirection;
+    private Rigidbody rb;
+
+    [SerializeField] private float groundDrag;
     
     // Velocity of movement
     public Vector3 velocity;
@@ -61,18 +73,23 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _startYScale = transform.localScale.y;
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
 
     private void Update()
     {
-        // Handles what movement state we are in
-        MovementStateHandler();
-        
+        // Gets Player Input
+        PlayerInput();
+
         // Resets falling velocity if they are no longer falling
         ResetVelocity();
         
-        // Movement
-        MoveInDirection();
+        // Limits speed
+        SpeedControl();
+        
+        // Handles what movement state we are in
+        MovementStateHandler();
 
         // Jumping
         CheckJump();
@@ -82,6 +99,25 @@ public class PlayerMovement : MonoBehaviour
 
         // Gravity
         Gravity();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    private void PlayerInput()
+    {
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
+        _verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void MovePlayer()
+    {
+        // calculate movement direction
+        _moveDirection = playerBody.forward * _verticalInput + playerBody.right * _horizontalInput;
+        
+        rb.AddForce(_moveDirection.normalized * (10 * walkSpeed), ForceMode.Force);
     }
 
     private void MovementStateHandler()
@@ -117,23 +153,33 @@ public class PlayerMovement : MonoBehaviour
     {
         // Sphere casts to check for ground
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
+        // handle drag
+        if (_isGrounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
 
         // Makes it so we arent changing velocity when on ground not falling
+        /*
         if (_isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
+        */
     }
 
-    private void MoveInDirection()
+    private void SpeedControl()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        Vector3 currentVel = rb.velocity;
+        Vector3 flatVel = new Vector3(currentVel.x, 0f, currentVel.z);
         
-        Transform myTransform = transform;
-        Vector3 move = myTransform.right * x + myTransform.forward * z; // This makes it so its moving locally so rotation is taken into consideration
-
-        controller.Move(move * (_currentSpeed * Time.deltaTime)); // Moving in the direction of move at the speed
+        // limit velocity if needed
+        if (flatVel.magnitude > walkSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * walkSpeed;
+            rb.velocity = new Vector3(limitedVel.x, currentVel.y, limitedVel.z);
+        }
     }
 
     private void CheckJump()
@@ -167,8 +213,8 @@ public class PlayerMovement : MonoBehaviour
         // If we are currently using gravity this makes us fall
         if (useGravity)
         {
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move(velocity * Time.deltaTime);
+            // velocity.y += gravity * Time.deltaTime;
+            // controller.Move(velocity * Time.deltaTime);
         }
     }
 }
