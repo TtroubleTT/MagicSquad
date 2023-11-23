@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CharacterController controller;
     
     [Header("Speed")]
     [SerializeField] private float walkSpeed = 12f;
     [SerializeField] private float sprintSpeed = 20f;
     [SerializeField] private float crouchSpeed = 5f;
+    [HideInInspector] public float wallRunSpeed;
     private float _currentSpeed;
     
     [Header("Key binds")]
@@ -22,9 +24,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] public LayerMask groundMask;
+    private bool _isGrounded;
     
     [Header("Physics")]
     [SerializeField] private float gravity = - 9.81f;
+    [HideInInspector] public bool useGravity = true;
+    [HideInInspector] public Vector3 velocity;
 
     [Header("Jumping")]
     [SerializeField] private float jumpHeight = 3f;
@@ -32,16 +37,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
     private float _startYScale;
+    
+    // Wall running
+    [HideInInspector] public bool wallRunning;
 
-    [Header("WallRunning")] 
-    public float wallRunSpeed;
-    public bool wallRunning;
-    
-    // Velocity of movement
-    public Vector3 velocity;
-    public bool useGravity = true;
-    private bool _isGrounded;
-    
     // Movement States
     public MovementState movementState;
 

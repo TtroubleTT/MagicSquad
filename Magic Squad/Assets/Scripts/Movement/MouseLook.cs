@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField]
-    private float mouseXSensitivity = 100f;
-    
-    [SerializeField]
-    private float mouseYSensitivity = 100f;
+    [Header("Sensitivity")]
+    [SerializeField] private float mouseXSensitivity = 100f;
+    [SerializeField] private float mouseYSensitivity = 100f;
 
-    [SerializeField]
-    private Transform playerBody;
+    [Header("References")]
+    [SerializeField] private Transform playerBody;
 
-    private float _xRotation = 0f;
+    private float _xRotation;
     
     // Code has been inspired and modified a bit based on these tutorials
     // https://www.youtube.com/watch?v=f473C43s8nE&t=505s

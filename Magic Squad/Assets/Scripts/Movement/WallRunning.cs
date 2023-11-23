@@ -5,14 +5,11 @@ using UnityEngine;
 
 public class WallRunning : MonoBehaviour
 {
-    [Header("WallRunning")] 
-    
+    [Header("WallRunning")]
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float wallRunForce;
-    [SerializeField] private float maxWallRunTime;
-    [SerializeField] private float wallClimbSpeed;
-    private float _wallRunTimer;
+    [SerializeField] private float wallRunSpeed;
+    [SerializeField] private float wallRunClimbSpeed;
 
     [Header("Input")] 
     [SerializeField] private KeyCode upwardsRunKey = KeyCode.LeftShift;
@@ -22,8 +19,7 @@ public class WallRunning : MonoBehaviour
     private float _horizontalInput;
     private float _verticalInput;
 
-    [Header("Detection")] 
-    
+    [Header("Detection")]
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float minJumpHeight;
     private RaycastHit _leftWallHit;
@@ -32,8 +28,7 @@ public class WallRunning : MonoBehaviour
     private bool _wallRight;
 
     [Header("References")]
-    
-    [SerializeField] private Transform orientation;
+    [SerializeField] private Transform playerBody;
     [SerializeField] private CharacterController controller;
     private PlayerMovement _playerMovement;
 
@@ -62,7 +57,7 @@ public class WallRunning : MonoBehaviour
     private void CheckForWall()
     {
         Vector3 origin = transform.position;
-        Vector3 direction = orientation.right;
+        Vector3 direction = playerBody.right;
         
         // Raycasts to check if their is a wall on right or left.
         _wallRight = Physics.Raycast(origin, direction, out _rightWallHit, wallCheckDistance, whatIsWall);
@@ -101,6 +96,7 @@ public class WallRunning : MonoBehaviour
     {
         _playerMovement.wallRunning = true;
         _playerMovement.useGravity = false;
+        _playerMovement.wallRunSpeed = wallRunSpeed;
     }
     
     private void StopWallRun()
@@ -115,11 +111,11 @@ public class WallRunning : MonoBehaviour
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
         // Makes it so your forward direction is decided by where you are facing.
-        if ((orientation.forward - wallForward).magnitude > (orientation.forward + wallForward).magnitude)
+        if ((playerBody.forward - wallForward).magnitude > (playerBody.forward + wallForward).magnitude)
             wallForward = -wallForward;
 
         // forward force on wall
-        controller.Move(wallForward * wallRunForce);
+        controller.Move(wallForward * wallRunSpeed);
         
         // Upwards and downwards running
         UpAndDownWallRunning();
@@ -131,13 +127,13 @@ public class WallRunning : MonoBehaviour
     {
         if (_upwardsRunning)
         {
-            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, wallClimbSpeed, _playerMovement.velocity.z);
+            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, wallRunClimbSpeed, _playerMovement.velocity.z);
             controller.Move(_playerMovement.velocity * Time.deltaTime);
         }
 
         if (_downwardsRunning)
         {
-            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, -wallClimbSpeed, _playerMovement.velocity.z);
+            _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, -wallRunClimbSpeed, _playerMovement.velocity.z);
             controller.Move(_playerMovement.velocity * Time.deltaTime);
         }
     }
