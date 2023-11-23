@@ -2622,6 +2622,40 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &878379107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878379101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0ea1a9d7b46ad4f8800911ee7f1467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBody: {fileID: 878379105}
+  walkSpeed: 12
+  sprintSpeed: 20
+  crouchSpeed: 5
+  jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
+  groundCheck: {fileID: 967947701}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  gravity: -9.81
+  jumpHeight: 3
+  jumpForce: 0
+  crouchYScale: 0
+  wallRunSpeed: 0
+  wallRunning: 0
+  groundDrag: 5
+  velocity: {x: 0, y: 0, z: 0}
+  useGravity: 1
+  movementState: 0
 --- !u!1 &912406232
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,6 +2750,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &967947701 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3104059769107951433, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
+  m_PrefabInstance: {fileID: 2578875301417795914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1053090952
 GameObject:
   m_ObjectHideFlags: 0
@@ -4138,6 +4177,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3523647103476993651, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 878379106}
+    - targetCorrespondingSourceObject: {fileID: 3523647103476993651, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 878379107}
     - targetCorrespondingSourceObject: {fileID: 8137954327509150506, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 557998121}
