@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CharacterController controller;
     
     [Header("Speed")]
     [SerializeField] private float walkSpeed = 12f;
     [SerializeField] private float sprintSpeed = 20f;
     [SerializeField] private float crouchSpeed = 5f;
+    [HideInInspector] public float wallRunSpeed;
     private float _currentSpeed;
     
     [Header("Key binds")]
@@ -22,9 +24,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] public LayerMask groundMask;
+    private bool _isGrounded;
     
     [Header("Physics")]
     [SerializeField] private float gravity = - 9.81f;
+    [HideInInspector] public bool useGravity = true;
+    [HideInInspector] public Vector3 velocity;
 
     [Header("Jumping")]
     [SerializeField] private float jumpHeight = 3f;
@@ -32,18 +37,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
     private float _startYScale;
-
-    [Header("WallRunning")] 
-    public float wallRunSpeed;
-    public bool wallRunning;
     
+    // Wall running
+    [HideInInspector] public bool wallRunning = false;
 
-    // Velocity of movement
-    public Vector3 velocity;
-    public bool useGravity = true;
-    private bool _isGrounded;
-    
-    // Current Movement State
+    // Movement States
     public MovementState movementState;
 
     public enum MovementState
@@ -53,6 +51,15 @@ public class PlayerMovement : MonoBehaviour
         WallRunning,
         Crouching,
         Air,
+    }
+    
+    // Code has been inspired and modified a bit based on these tutorials
+    // https://www.youtube.com/watch?v=f473C43s8nE&t=505s
+    // https://www.youtube.com/watch?v=_QajrabyTJc
+
+    public bool IsGrounded()
+    {
+        return _isGrounded;
     }
     
     private void Start()
@@ -83,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementStateHandler()
     {
+        // Determines the movement state and speed based on different conditions
         if (wallRunning)
         {
             movementState = MovementState.WallRunning;
@@ -111,8 +119,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ResetVelocity()
     {
+        // Sphere casts to check for ground
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        // Makes it so we arent changing velocity when on ground not falling
         if (_isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -133,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         // Physics stuff for jumping
-        if (Input.GetKey(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
+        if (Input.GetKeyDown(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -143,11 +153,13 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 localScale = transform.localScale;
         
+        // If we push down the crouch key and we are crouching (not wall running) we decrease model size
         if (Input.GetKeyDown(crouchKey) && movementState == MovementState.Crouching)
         {
             transform.localScale = new Vector3(localScale.x, crouchYScale, localScale.z);
         }
 
+        // When releasing crouch key sets our scale back to normal
         if (Input.GetKeyUp(crouchKey))
         {
             transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
@@ -156,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
+        // If we are currently using gravity this makes us fall
         if (useGravity)
         {
             velocity.y += gravity * Time.deltaTime;

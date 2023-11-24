@@ -2751,7 +2751,7 @@ Transform:
   m_GameObject: {fileID: 1053090952}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.13, z: -0.0015}
+  m_LocalPosition: {x: 0, y: 3.13, z: 0.1272}
   m_LocalScale: {x: 0.049999997, y: 5, z: 0.049999997}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3973,8 +3973,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1329447810645162843, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
+      propertyPath: wallRunSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329447810645162843, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
       propertyPath: wallCheckDistance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329447810645162843, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
+      propertyPath: wallRunClimbSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333857954973827223, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
+      propertyPath: wallRunSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3523647103476993651, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
       propertyPath: m_Name
