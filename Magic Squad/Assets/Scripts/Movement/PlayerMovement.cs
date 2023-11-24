@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private float _startYScale;
     
     // Wall running
-    [HideInInspector] public bool wallRunning;
+    [HideInInspector] public bool wallRunning = false;
 
     // Movement States
     public MovementState movementState;
@@ -56,6 +56,11 @@ public class PlayerMovement : MonoBehaviour
     // Code has been inspired and modified a bit based on these tutorials
     // https://www.youtube.com/watch?v=f473C43s8nE&t=505s
     // https://www.youtube.com/watch?v=_QajrabyTJc
+
+    public bool IsGrounded()
+    {
+        return _isGrounded;
+    }
     
     private void Start()
     {
@@ -138,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         // Physics stuff for jumping
-        if (Input.GetKey(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
+        if (Input.GetKeyDown(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

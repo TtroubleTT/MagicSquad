@@ -10,10 +10,16 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float wallRunSpeed;
     [SerializeField] private float wallRunClimbSpeed;
+    [SerializeField] private float wallJumpUpForce;
+    [SerializeField] private float wallJumpSideForce;
+    [SerializeField] private float wallJumpForwardForce;
+    private bool _isWallJumping;
+    private Vector3 velocity;
 
     [Header("Input")] 
     [SerializeField] private KeyCode upwardsRunKey = KeyCode.LeftShift;
     [SerializeField] private KeyCode downwardsRunKey = KeyCode.LeftControl;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     private bool _upwardsRunning;
     private bool _downwardsRunning;
     private float _horizontalInput;
@@ -46,6 +52,8 @@ public class WallRunning : MonoBehaviour
     {
         CheckForWall();
         WallRunningState();
+        WallJump();
+        WallJumpMove();
     }
 
     private void FixedUpdate()
@@ -54,6 +62,28 @@ public class WallRunning : MonoBehaviour
             WallRunningMovement();
     }
 
+    private bool IsInAir()
+    {
+        // Ray casts downwards a an amount to check if you are in the air. If the raycast hits nothing then you are above ground.
+        return !Physics.Raycast(transform.position, Vector3.down, minJumpHeight, whatIsGround);
+    }
+
+    private Vector3 GetWallNormal()
+    {
+        return _wallRight ? _rightWallHit.normal : _leftWallHit.normal; // If its a right wall use the right walls vector if not use the left walls.
+    }
+
+    private Vector3 GetWallForward(Vector3 wallNormal)
+    {
+        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
+        
+        // Makes it so your forward direction is decided by where you are facing.
+        if ((playerBody.forward - wallForward).magnitude > (playerBody.forward + wallForward).magnitude)
+            wallForward = -wallForward;
+
+        return wallForward;
+    }
+    
     private void CheckForWall()
     {
         Vector3 origin = transform.position;
@@ -62,12 +92,6 @@ public class WallRunning : MonoBehaviour
         // Raycasts to check if their is a wall on right or left.
         _wallRight = Physics.Raycast(origin, direction, out _rightWallHit, wallCheckDistance, whatIsWall);
         _wallLeft = Physics.Raycast(origin, - direction, out _leftWallHit, wallCheckDistance, whatIsWall);
-    }
-
-    private bool IsInAir()
-    {
-        // Ray casts downwards a an amount to check if you are in the air. If the raycast hits nothing then you are above ground.
-        return !Physics.Raycast(transform.position, Vector3.down, minJumpHeight, whatIsGround);
     }
 
     private void WallRunningState()
@@ -94,9 +118,11 @@ public class WallRunning : MonoBehaviour
 
     private void StartWallRun()
     {
+        _isWallJumping = false;
         _playerMovement.wallRunning = true;
         _playerMovement.useGravity = false;
         _playerMovement.wallRunSpeed = wallRunSpeed;
+        _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, 0, _playerMovement.velocity.z); // So we don't build up a velocity
     }
     
     private void StopWallRun()
@@ -107,12 +133,8 @@ public class WallRunning : MonoBehaviour
 
     private void WallRunningMovement()
     {
-        Vector3 wallNormal = _wallRight ? _rightWallHit.normal : _leftWallHit.normal; // If its a right wall use the right walls vector if not use the left walls.
-        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
-
-        // Makes it so your forward direction is decided by where you are facing.
-        if ((playerBody.forward - wallForward).magnitude > (playerBody.forward + wallForward).magnitude)
-            wallForward = -wallForward;
+        Vector3 wallNormal = GetWallNormal();
+        Vector3 wallForward = GetWallForward(wallNormal);
 
         // forward force on wall
         controller.Move(wallForward * wallRunSpeed);
@@ -135,6 +157,36 @@ public class WallRunning : MonoBehaviour
         {
             _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, -wallRunClimbSpeed, _playerMovement.velocity.z);
             controller.Move(_playerMovement.velocity * Time.deltaTime);
+        }
+    }
+
+    private void WallJump()
+    {
+        if (!Input.GetKeyDown(jumpKey) || !_playerMovement.wallRunning)
+            return;
+
+        _isWallJumping = true;
+
+        Vector3 wallNormal = GetWallNormal();
+        Vector3 wallForward = GetWallForward(wallNormal);
+
+        // Velocity
+        velocity = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce; // ads side and up movement
+        velocity += wallForward * wallJumpForwardForce; // adds forward movement
+        _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, 0, _playerMovement.velocity.z); // makes it so you don't just fall on the ground
+    }
+
+    private void WallJumpMove()
+    {
+        if (_playerMovement.IsGrounded())
+        {
+            _isWallJumping = false;
+            return;
+        }
+
+        if (_isWallJumping)
+        {
+            controller.Move(velocity * Time.deltaTime);
         }
     }
 }
