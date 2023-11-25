@@ -33,13 +33,14 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] private float jumpHeight = 3f;
+    private bool _canDoubleJump = false;
 
     [Header("Crouching")] 
     [SerializeField] private float crouchYScale;
     private float _startYScale;
     
-    // Wall running
-    [HideInInspector] public bool wallRunning = false;
+    // References
+    private WallRunning _wallRunning;
 
     // Movement States
     public MovementState movementState;
@@ -65,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _startYScale = transform.localScale.y;
+        _wallRunning = GetComponent<WallRunning>();
     }
 
     private void Update()
@@ -91,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovementStateHandler()
     {
         // Determines the movement state and speed based on different conditions
-        if (wallRunning)
+        if (_wallRunning.isWallRunning)
         {
             movementState = MovementState.WallRunning;
             _currentSpeed = wallRunSpeed;
@@ -125,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
         // Makes it so we arent changing velocity when on ground not falling
         if (_isGrounded && velocity.y < 0)
         {
+            _canDoubleJump = true;
             velocity.y = -2f;
         }
     }
@@ -145,6 +148,12 @@ public class PlayerMovement : MonoBehaviour
         // Physics stuff for jumping
         if (Input.GetKeyDown(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
         {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        if (Input.GetKeyDown(jumpKey) && movementState == MovementState.Air && _canDoubleJump && !_wallRunning.isWallJumping)
+        {
+            _canDoubleJump = false;
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }

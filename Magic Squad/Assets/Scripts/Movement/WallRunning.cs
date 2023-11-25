@@ -13,7 +13,8 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private float wallJumpUpForce;
     [SerializeField] private float wallJumpSideForce;
     [SerializeField] private float wallJumpForwardForce;
-    private bool _isWallJumping;
+    [HideInInspector] public bool isWallJumping;
+    [HideInInspector] public bool isWallRunning;
     private Vector3 velocity;
 
     [Header("Input")] 
@@ -58,7 +59,7 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_playerMovement.wallRunning)
+        if (isWallRunning)
             WallRunningMovement();
     }
 
@@ -106,20 +107,20 @@ public class WallRunning : MonoBehaviour
         // Decides whether it needs to start or stop the wall run
         if ((_wallLeft || _wallRight) && _verticalInput > 0 && IsInAir()) // If theres either a wall on left or right and we are in air and have upwards vertical input.
         {
-            if (!_playerMovement.wallRunning)
+            if (!isWallRunning)
                 StartWallRun();
         }
         else
         {
-            if(_playerMovement.wallRunning)
+            if(isWallRunning)
                 StopWallRun();
         }
     }
 
     private void StartWallRun()
     {
-        _isWallJumping = false;
-        _playerMovement.wallRunning = true;
+        isWallJumping = false;
+        isWallRunning = true;
         _playerMovement.useGravity = false;
         _playerMovement.wallRunSpeed = wallRunSpeed;
         _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, 0, _playerMovement.velocity.z); // So we don't build up a velocity
@@ -127,7 +128,7 @@ public class WallRunning : MonoBehaviour
     
     private void StopWallRun()
     {
-        _playerMovement.wallRunning = false;
+        isWallRunning = false;
         _playerMovement.useGravity = true;
     }
 
@@ -162,10 +163,10 @@ public class WallRunning : MonoBehaviour
 
     private void WallJump()
     {
-        if (!Input.GetKeyDown(jumpKey) || !_playerMovement.wallRunning)
+        if (!Input.GetKeyDown(jumpKey) || !isWallRunning)
             return;
 
-        _isWallJumping = true;
+        isWallJumping = true;
 
         Vector3 wallNormal = GetWallNormal();
         Vector3 wallForward = GetWallForward(wallNormal);
@@ -180,11 +181,11 @@ public class WallRunning : MonoBehaviour
     {
         if (_playerMovement.IsGrounded())
         {
-            _isWallJumping = false;
+            isWallJumping = false;
             return;
         }
 
-        if (_isWallJumping)
+        if (isWallJumping)
         {
             controller.Move(velocity * Time.deltaTime);
         }
