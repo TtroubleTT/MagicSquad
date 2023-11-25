@@ -79,6 +79,7 @@ MonoBehaviour:
   walkSpeed: 12
   sprintSpeed: 20
   crouchSpeed: 5
+  wallRunSpeed: 0
   jumpKey: 32
   sprintKey: 304
   crouchKey: 306
@@ -88,12 +89,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   gravity: -39.24
+  useGravity: 1
+  velocity: {x: 0, y: 0, z: 0}
   jumpHeight: 4
   crouchYScale: 0.5
-  wallRunSpeed: 5
   wallRunning: 0
-  velocity: {x: 0, y: 0, z: 0}
-  useGravity: 1
   movementState: 0
 --- !u!114 &1329447810645162843
 MonoBehaviour:
@@ -113,14 +113,16 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  wallRunForce: 0.4
-  maxWallRunTime: 1.5
-  wallClimbSpeed: 6
+  wallRunSpeed: 0.3
+  wallRunClimbSpeed: 4
+  wallJumpUpForce: 10
+  wallJumpSideForce: 15
   upwardsRunKey: 304
   downwardsRunKey: 306
-  wallCheckDistance: 0.7
+  jumpKey: 32
+  wallCheckDistance: 1
   minJumpHeight: 2
-  orientation: {fileID: 8045168280018231875}
+  playerBody: {fileID: 8045168280018231875}
   controller: {fileID: 8415735055528578445}
 --- !u!1 &4424734255451308140
 GameObject:
@@ -227,7 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ec00d1ae1205b4fb4b736e0ccbcd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 400
+  mouseXSensitivity: 100
+  mouseYSensitivity: 100
   playerBody: {fileID: 8045168280018231875}
 --- !u!1 &8137954327509150506
 GameObject:
