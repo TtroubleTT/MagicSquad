@@ -102,12 +102,10 @@ public class PlayerMovement : MonoBehaviour
         if (_wallRunning.isWallRunning)
         {
             movementState = MovementState.WallRunning;
-            _currentSpeed = wallRunSpeed;
         }
         else if (_dash.isDashing)
         {
             movementState = MovementState.Dashing;
-            _currentSpeed = dashSpeed;
         }
         else if (_isCrouching)
         {
