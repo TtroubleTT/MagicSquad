@@ -19,33 +19,60 @@ public class Dash : MonoBehaviour
 
     [Header("References")] 
     [SerializeField] private CharacterController controller;
+    private PlayerMovement _playerMovement;
+
+    private void Start()
+    {
+        _playerMovement = GetComponent<PlayerMovement>();
+    }
 
     private void Update()
     {
-        DoDash();
+        CheckDash();
         DashMove();
     }
 
-    private Vector3 GetDashDirection()
+    private (float, float) GetHorizontalAndVerticalMovement()
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        
+        return (x, z); // Tuple return
+    }
+
+    private Vector3 GetDashDirection(float x, float z)
+    {
         Transform myTransform = transform;
         Vector3 direction = myTransform.right * x + myTransform.forward * z; // This makes it so its moving locally so rotation is taken into consideration
         return direction;
     }
 
-    private void DoDash()
+    private void CheckDash()
     {
         // if you are pressing dash key and its passed the cooldown
         if (Input.GetKeyDown(dashKey) && !isDashing && Time.time - dashStartTime > dashCooldown)
         {
-            isDashing = true;
-            dashStartTime = Time.time;
-            Vector3 direction = GetDashDirection();
-            velocity = direction * dashSpeed;
+            // No dashing if you are crouching or wall running
+            if (_playerMovement.movementState == PlayerMovement.MovementState.Crouching ||
+                _playerMovement.movementState == PlayerMovement.MovementState.WallRunning)
+                return;
+        
+            (float x, float z) = GetHorizontalAndVerticalMovement(); // Tuple unpacking
+
+            // If arent pressing a key (second needed command for dash) don't execute
+            if (x == 0 && z == 0)
+                return;
+            
+            StartDash(x, z);
         }
+    }
+
+    private void StartDash(float x, float z)
+    {
+        isDashing = true;
+        _playerMovement.dashSpeed = dashSpeed;
+        dashStartTime = Time.time;
+        Vector3 direction = GetDashDirection(x, z);
+        velocity = direction * dashSpeed;
     }
 
     private void DashMove()

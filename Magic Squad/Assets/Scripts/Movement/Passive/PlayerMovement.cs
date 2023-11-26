@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sprintSpeed = 20f;
     [SerializeField] private float crouchSpeed = 5f;
     [HideInInspector] public float wallRunSpeed;
+    [HideInInspector] public float dashSpeed;
     private float _currentSpeed;
     
     [Header("Key binds")]
@@ -104,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         else if (_dash.isDashing)
         {
             movementState = MovementState.Dashing;
+            _currentSpeed = dashSpeed;
         }
         else if (Input.GetKey(crouchKey))
         {
