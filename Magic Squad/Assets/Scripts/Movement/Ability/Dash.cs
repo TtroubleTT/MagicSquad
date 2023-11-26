@@ -26,6 +26,16 @@ public class Dash : MonoBehaviour
         DashMove();
     }
 
+    private Vector3 GetDashDirection()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+        
+        Transform myTransform = transform;
+        Vector3 direction = myTransform.right * x + myTransform.forward * z; // This makes it so its moving locally so rotation is taken into consideration
+        return direction;
+    }
+
     private void DoDash()
     {
         // if you are pressing dash key and its passed the cooldown
@@ -33,7 +43,8 @@ public class Dash : MonoBehaviour
         {
             isDashing = true;
             dashStartTime = Time.time;
-            velocity = transform.forward * dashSpeed;
+            Vector3 direction = GetDashDirection();
+            velocity = direction * dashSpeed;
         }
     }
 
