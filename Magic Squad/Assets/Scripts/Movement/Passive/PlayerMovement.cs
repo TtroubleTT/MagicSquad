@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     
     // References
     private WallRunning _wallRunning;
+    private Dash _dash;
 
     // Movement States
     public MovementState movementState;
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Walking,
         Sprinting,
+        Dashing,
         WallRunning,
         Crouching,
         Air,
@@ -67,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _startYScale = transform.localScale.y;
         _wallRunning = GetComponent<WallRunning>();
+        _dash = GetComponent<Dash>();
     }
 
     private void Update()
@@ -97,6 +100,10 @@ public class PlayerMovement : MonoBehaviour
         {
             movementState = MovementState.WallRunning;
             _currentSpeed = wallRunSpeed;
+        }
+        else if (_dash.isDashing)
+        {
+            movementState = MovementState.Dashing;
         }
         else if (Input.GetKey(crouchKey))
         {
