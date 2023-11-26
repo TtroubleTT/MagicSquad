@@ -7,12 +7,15 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CharacterController controller;
+    private WallRunning _wallRunning;
+    private Dash _dash;
     
     [Header("Speed")]
     [SerializeField] private float walkSpeed = 12f;
     [SerializeField] private float sprintSpeed = 20f;
     [SerializeField] private float crouchSpeed = 5f;
     [HideInInspector] public float wallRunSpeed;
+    [HideInInspector] public float dashSpeed;
     private float _currentSpeed;
     
     [Header("Key binds")]
@@ -35,20 +38,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 3f;
     private bool _canDoubleJump = false;
 
-    [Header("Crouching")] 
+    [Header("Crouching")]
     [SerializeField] private float crouchYScale;
     private float _startYScale;
-    
-    // References
-    private WallRunning _wallRunning;
+    private bool _isCrouching = false;
 
     // Movement States
-    public MovementState movementState;
+    [HideInInspector] public MovementState movementState;
 
     public enum MovementState
     {
         Walking,
         Sprinting,
+        Dashing,
         WallRunning,
         Crouching,
         Air,
@@ -67,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _startYScale = transform.localScale.y;
         _wallRunning = GetComponent<WallRunning>();
+        _dash = GetComponent<Dash>();
     }
 
     private void Update()
@@ -85,6 +88,9 @@ public class PlayerMovement : MonoBehaviour
         
         // Crouching
         CheckCrouch();
+        
+        // Force standing if player isn't trying to crouch and is no longer under object
+        ForceStandUp();
 
         // Gravity
         Gravity();
@@ -98,7 +104,12 @@ public class PlayerMovement : MonoBehaviour
             movementState = MovementState.WallRunning;
             _currentSpeed = wallRunSpeed;
         }
-        else if (Input.GetKey(crouchKey))
+        else if (_dash.isDashing)
+        {
+            movementState = MovementState.Dashing;
+            _currentSpeed = dashSpeed;
+        }
+        else if (_isCrouching)
         {
             movementState = MovementState.Crouching;
             _currentSpeed = crouchSpeed;
@@ -158,20 +169,40 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool IsUnderObject()
+    {
+        float heightAbove = controller.height - crouchYScale; // height length between full stand and crouch
+        
+        // Ray casts upwards an amount to check if you are under and object. If the raycast hits nothing then you are above ground.
+        return Physics.Raycast(transform.position, Vector3.up, heightAbove, groundMask);
+    }
+
     private void CheckCrouch()
     {
         Vector3 localScale = transform.localScale;
         
         // If we push down the crouch key and we are crouching (not wall running) we decrease model size
-        if (Input.GetKeyDown(crouchKey) && movementState == MovementState.Crouching)
+        if (Input.GetKeyDown(crouchKey) && movementState != MovementState.WallRunning)
         {
             transform.localScale = new Vector3(localScale.x, crouchYScale, localScale.z);
+            _isCrouching = true;
         }
 
         // When releasing crouch key sets our scale back to normal
-        if (Input.GetKeyUp(crouchKey))
+        if (Input.GetKeyUp(crouchKey) && !IsUnderObject())
         {
             transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
+            _isCrouching = false;
+        }
+    }
+
+    private void ForceStandUp()
+    {
+        if (_isCrouching && !Input.GetKey(crouchKey) && !IsUnderObject())
+        {
+            Vector3 localScale = transform.localScale;
+            transform.localScale = new Vector3(localScale.x, _startYScale, localScale.z);
+            _isCrouching = false;
         }
     }
 

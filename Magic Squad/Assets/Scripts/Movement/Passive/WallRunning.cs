@@ -8,11 +8,11 @@ public class WallRunning : MonoBehaviour
     [Header("WallRunning")]
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float wallRunSpeed;
-    [SerializeField] private float wallRunClimbSpeed;
-    [SerializeField] private float wallJumpUpForce;
-    [SerializeField] private float wallJumpSideForce;
-    [SerializeField] private float wallJumpForwardForce;
+    [SerializeField] private float wallRunSpeed = 0.3f;
+    [SerializeField] private float wallRunClimbSpeed = 4;
+    [SerializeField] private float wallJumpUpSpeed= 10;
+    [SerializeField] private float wallJumpSideSpeed= 15;
+    [SerializeField] private float wallJumpForwardSpeed = 10;
     [HideInInspector] public bool isWallJumping;
     [HideInInspector] public bool isWallRunning;
     private Vector3 velocity;
@@ -23,7 +23,6 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     private bool _upwardsRunning;
     private bool _downwardsRunning;
-    private float _horizontalInput;
     private float _verticalInput;
 
     [Header("Detection")]
@@ -98,7 +97,6 @@ public class WallRunning : MonoBehaviour
     private void WallRunningState()
     {
         // Inputs
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
 
         _upwardsRunning = Input.GetKey(upwardsRunKey);
@@ -172,8 +170,8 @@ public class WallRunning : MonoBehaviour
         Vector3 wallForward = GetWallForward(wallNormal);
 
         // Velocity
-        velocity = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce; // ads side and up movement
-        velocity += wallForward * wallJumpForwardForce; // adds forward movement
+        velocity = transform.up * wallJumpUpSpeed + wallNormal * wallJumpSideSpeed; // adds side and up movement
+        velocity += wallForward * wallJumpForwardSpeed; // adds forward movement
         _playerMovement.velocity = new Vector3(_playerMovement.velocity.x, 0, _playerMovement.velocity.z); // makes it so you don't just fall on the ground
     }
 
