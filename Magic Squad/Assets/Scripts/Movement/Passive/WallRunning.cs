@@ -23,7 +23,6 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     private bool _upwardsRunning;
     private bool _downwardsRunning;
-    private float _horizontalInput;
     private float _verticalInput;
 
     [Header("Detection")]
@@ -98,7 +97,6 @@ public class WallRunning : MonoBehaviour
     private void WallRunningState()
     {
         // Inputs
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
 
         _upwardsRunning = Input.GetKey(upwardsRunKey);
