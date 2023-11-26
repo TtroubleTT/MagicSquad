@@ -13,21 +13,39 @@ public class SoulManager : MonoBehaviour
     [SerializeField]
     private float currentSoul = 0;
 
-    public void AddSoul(float amount)
+    // Returns a bool stating weather or not it was able to add the full amount
+    public bool AddSoul(float amount)
     {
         if (amount + currentSoul > maxSoul)
         {
             currentSoul = maxSoul;
+            return false;
         }
-        else
+        
+        currentSoul += amount;
+        return true;
+    }
+
+    // Returns a bool stating weather or not it can subtract the soul. (Doesn't subtract the soul if there isn't enough cause then cant do ability)
+    public bool SubtractSoul(float amount)
+    {
+        if (currentSoul - amount < minSoul)
         {
-            currentSoul = currentSoul + amount;
+            return false;
         }
+        
+        currentSoul -= amount;
+        return true;
     }
 
     public float GetMaxSoul()
     {
         return maxSoul;
+    }
+
+    public float GetMinSoul()
+    {
+        return minSoul;
     }
 
     public float GetCurrentSoul()
