@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Close range attack
-public class SoulStrike : MonoBehaviour, IDamage
+public class SoulStrike : MonoBehaviour, ICombat
 {
     public float Damage { get; set; } = 50f;
 
@@ -27,7 +27,7 @@ public class SoulStrike : MonoBehaviour, IDamage
         }
     }
 
-    private void Attack()
+    public void Attack()
     {
         bool hitEnemy = Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, attackDistance, enemyLayer);
 
