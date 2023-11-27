@@ -26,10 +26,14 @@ public abstract class EntityBase : MonoBehaviour
         if (CurrentHealth - amount <= 0)
         {
             CurrentHealth = 0;
+            Debug.Log("die");
             return false;
         }
-
+        
         CurrentHealth -= amount;
+        Debug.Log($"health: {CurrentHealth}");
         return true;
     }
+
+    protected abstract void Die();
 }
