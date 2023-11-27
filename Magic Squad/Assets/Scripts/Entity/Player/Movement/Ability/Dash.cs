@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : MonoBehaviour
+public class Dash : AbilityBase
 {
     [Header("Dashing")] 
     [SerializeField] private float dashSpeed = 50;
@@ -20,6 +20,22 @@ public class Dash : MonoBehaviour
     [Header("References")] 
     [SerializeField] private CharacterController controller;
     private PlayerMovement _playerMovement;
+    
+    // Ability Base Overrides
+    protected override float SoulCost { get; set; } = 10f;
+
+    protected override void DoAbility()
+    {
+        base.DoAbility();
+        
+        (float x, float z) = GetHorizontalAndVerticalMovement(); // Tuple unpacking
+
+        // If arent pressing a key (second needed command for dash) don't execute
+        if (x == 0 && z == 0)
+            return;
+        
+        StartDash(x, z);
+    }
 
     private void Start()
     {
@@ -56,13 +72,7 @@ public class Dash : MonoBehaviour
                 _playerMovement.movementState == PlayerMovement.MovementState.WallRunning)
                 return;
         
-            (float x, float z) = GetHorizontalAndVerticalMovement(); // Tuple unpacking
-
-            // If arent pressing a key (second needed command for dash) don't execute
-            if (x == 0 && z == 0)
-                return;
-            
-            StartDash(x, z);
+            DoAbility();
         }
     }
 

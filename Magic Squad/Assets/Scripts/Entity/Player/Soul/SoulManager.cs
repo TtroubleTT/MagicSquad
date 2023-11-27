@@ -11,7 +11,7 @@ public class SoulManager : MonoBehaviour
     private float minSoul = 0;
 
     [SerializeField]
-    private float currentSoul = 0;
+    private float currentSoul = 100;
 
     // Returns a bool stating weather or not it was able to add the full amount
     public bool AddSoul(float amount)
