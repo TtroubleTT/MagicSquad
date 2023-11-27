@@ -7,17 +7,22 @@ public abstract class AbilityBase : MonoBehaviour
 {
     protected abstract float SoulCost { get; set; }
 
-    private static SoulManager _soulManager;
+    private SoulManager _soulManager;
 
-    protected virtual void DoAbility()
+    private void Awake()
     {
-        // how to reference soul manager google
-        Debug.Log("before bool");
+        _soulManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SoulManager>();
+    }
+
+    protected virtual bool DoAbility()
+    {
         bool canDoAbility = _soulManager.SubtractSoul(SoulCost);
-        Debug.Log("after bool");
+
         if (!canDoAbility)
-            return;
-        
+            return false;
+
+        return true;
+
         // other scripts will extend this base behavior
     }
 }

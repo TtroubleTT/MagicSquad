@@ -29,11 +29,11 @@ public class SoulManager : MonoBehaviour
     // Returns a bool stating weather or not it can subtract the soul. (Doesn't subtract the soul if there isn't enough cause then cant do ability)
     public bool SubtractSoul(float amount)
     {
-        if (currentSoul - amount <= minSoul)
+        if (currentSoul - amount < minSoul)
         {
             return false;
         }
-        
+
         currentSoul -= amount;
         return true;
     }

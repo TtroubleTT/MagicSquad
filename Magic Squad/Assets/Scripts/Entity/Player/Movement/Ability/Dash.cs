@@ -10,9 +10,9 @@ public class Dash : AbilityBase
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashCooldown;
     [HideInInspector] public bool isDashing;
-    private float dashStartTime;
-    private float dashCooldownStart;
-    private Vector3 velocity;
+    private float _dashStartTime;
+    private float _dashCooldownStart;
+    private Vector3 _velocity;
 
     [Header("Input")] 
     [SerializeField] private KeyCode dashKey = KeyCode.E;
@@ -24,17 +24,20 @@ public class Dash : AbilityBase
     // Ability Base Overrides
     protected override float SoulCost { get; set; } = 10f;
 
-    protected override void DoAbility()
+    protected override bool DoAbility()
     {
-        base.DoAbility();
-        
         (float x, float z) = GetHorizontalAndVerticalMovement(); // Tuple unpacking
 
         // If arent pressing a key (second needed command for dash) don't execute
         if (x == 0 && z == 0)
-            return;
+            return false;
         
+        // This will do the checks for decreasing soul amount. If we dont have enough soul we will exit and not start dash.
+        if (!base.DoAbility())
+            return false;
+
         StartDash(x, z);
+        return true;
     }
 
     private void Start()
@@ -65,7 +68,7 @@ public class Dash : AbilityBase
     private void CheckDash()
     {
         // if you are pressing dash key and its passed the cooldown
-        if (Input.GetKeyDown(dashKey) && !isDashing && Time.time - dashStartTime > dashCooldown)
+        if (Input.GetKeyDown(dashKey) && !isDashing && Time.time - _dashStartTime > dashCooldown)
         {
             // No dashing if you are crouching or wall running
             if (_playerMovement.movementState == PlayerMovement.MovementState.Crouching ||
@@ -80,9 +83,9 @@ public class Dash : AbilityBase
     {
         isDashing = true;
         _playerMovement.dashSpeed = dashSpeed;
-        dashStartTime = Time.time;
+        _dashStartTime = Time.time;
         Vector3 direction = GetDashDirection(x, z);
-        velocity = direction * dashSpeed;
+        _velocity = direction * dashSpeed;
     }
 
     private void DashMove()
@@ -90,9 +93,9 @@ public class Dash : AbilityBase
         if (isDashing)
         {
             // if its within the dash duration
-            if (Time.time - dashStartTime < dashDuration)
+            if (Time.time - _dashStartTime < dashDuration)
             {
-                controller.Move(velocity * Time.deltaTime);
+                controller.Move(_velocity * Time.deltaTime);
             }
             else
             {
