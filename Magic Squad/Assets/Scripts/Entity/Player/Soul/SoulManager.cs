@@ -13,7 +13,7 @@ public class SoulManager : MonoBehaviour
     [SerializeField]
     private float currentSoul = 100;
 
-    // Returns a bool stating weather or not it was able to add the full amount
+    // Returns a bool stating whether or not it was able to add the full amount
     public bool AddSoul(float amount)
     {
         if (amount + currentSoul > maxSoul)
