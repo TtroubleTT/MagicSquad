@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBase : EntityBase
 {
@@ -9,7 +11,7 @@ public class PlayerBase : EntityBase
 
     protected override void Die()
     {
-        // what to do when a player dies
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     public override bool AddHealth(float amount)
@@ -30,12 +32,11 @@ public class PlayerBase : EntityBase
         if (CurrentHealth - amount <= 0)
         {
             CurrentHealth = 0;
-            Debug.Log("die");
+            Die();
             return false;
         }
         
         CurrentHealth -= amount;
-        Debug.Log($"health: {CurrentHealth}");
         return true;
     }
 }
