@@ -20,8 +20,7 @@ public class Dash : AbilityBase
     [Header("References")] 
     [SerializeField] private CharacterController controller;
     private PlayerMovement _playerMovement;
-    private PlayerBase _playerBase;
-    
+
     // Ability Base Overrides
     protected override float SoulCost { get; set; } = 10f;
 
@@ -44,7 +43,6 @@ public class Dash : AbilityBase
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        _playerBase = GetComponent<PlayerBase>();
     }
 
     private void Update()
@@ -87,7 +85,7 @@ public class Dash : AbilityBase
         _playerMovement.dashSpeed = dashSpeed;
         _dashStartTime = Time.time;
         Vector3 direction = GetDashDirection(x, z);
-        _velocity = direction * dashSpeed; ;
+        _velocity = direction * dashSpeed;
     }
 
     private void DashMove()
