@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5499683377979997573}
   - component: {fileID: 6004229854859266330}
   - component: {fileID: 3798158640156584629}
-  - component: {fileID: 3062090732256629056}
+  - component: {fileID: 1827088416964060040}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -176,7 +176,7 @@ MonoBehaviour:
   maxSoul: 100
   minSoul: 0
   currentSoul: 100
---- !u!54 &3062090732256629056
+--- !u!54 &1827088416964060040
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +198,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
