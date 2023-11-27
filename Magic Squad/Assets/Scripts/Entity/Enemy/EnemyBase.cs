@@ -12,4 +12,9 @@ public class EnemyBase : EntityBase
     {
         Destroy(gameObject);
     }
+
+    private void SpawnSoul()
+    {
+        // spawn soul once there is a soul object made
+    }
 }
