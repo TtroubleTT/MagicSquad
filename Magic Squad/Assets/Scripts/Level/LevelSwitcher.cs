@@ -11,7 +11,7 @@ public class LevelSwitcher : MonoBehaviour
     void OnTriggerEnter(Collider PlayerObject)
     {
         //if (other.CompareTag("PlayerObject")) {
-            //SceneManager.LoadScene(levelName);
+            //SceneManager.LoadScene(Scene 2);
         //}
     }
 
