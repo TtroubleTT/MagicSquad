@@ -15,7 +15,7 @@ public class SoulMeter : MonoBehaviour
     private void Start()
     {
         barImage = GetComponent<Image>();
-        barImage.fillAmount = .2f;
+        barImage.fillAmount = .5f;
 
         // This is how you get the script so you can reference items in the soul manager
         _soulManager = GetComponent<SoulManager>();
