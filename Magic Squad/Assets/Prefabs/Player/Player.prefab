@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6004229854859266330}
   - component: {fileID: 3798158640156584629}
   - component: {fileID: 1827088416964060040}
+  - component: {fileID: 2916955876139936306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -203,6 +204,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &2916955876139936306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523647103476993651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e47d57581973d4397f0371a5195f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  cam: {fileID: 5303126048535765995}
+  attackDistance: 5
+  attackKey: 323
+  cooldown: 1
 --- !u!1 &4424734255451308140
 GameObject:
   m_ObjectHideFlags: 0
