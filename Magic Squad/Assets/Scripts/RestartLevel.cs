@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class RestartLevel : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("collision");
-        if(collision.gameObject.CompareTag("Respawn"))
+        if(other.gameObject.CompareTag("Player"))
         {
             Debug.Log("respawning");
             Respawn();

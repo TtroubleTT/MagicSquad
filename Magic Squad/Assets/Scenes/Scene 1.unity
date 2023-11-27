@@ -9280,8 +9280,8 @@ GameObject:
   - component: {fileID: 854208534}
   - component: {fileID: 854208533}
   - component: {fileID: 854208532}
-  - component: {fileID: 854208537}
-  - component: {fileID: 854208536}
+  - component: {fileID: 854208538}
+  - component: {fileID: 854208539}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Respawn
@@ -9304,7 +9304,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -9375,7 +9375,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &854208536
+--- !u!114 &854208538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9387,7 +9387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385deb7da11211640b2e76b34bebd3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &854208537
+--- !u!54 &854208539
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9410,10 +9410,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &854789277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17593,7 +17593,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3062090732256629056, guid: 791e8f6bd2bd73f4c97b1202aa399b64, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
