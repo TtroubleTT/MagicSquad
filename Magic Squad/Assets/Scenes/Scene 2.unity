@@ -1057,25 +1057,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b92ecae084215c748bc7120944a860f3, type: 3}
---- !u!1 &66314913 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5820652808834764859, guid: dfb30c787ae51384c820520d62da03f6, type: 3}
-  m_PrefabInstance: {fileID: 9179385419010705685}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &66314920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 66314913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8f20220ea8427b4cbef0e61b733298b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 30
-  shotCooldown: 3
 --- !u!1 &69084705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1326364778710077615, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
@@ -18877,14 +18858,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShootingEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6700284508735701498, guid: dfb30c787ae51384c820520d62da03f6, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5820652808834764859, guid: dfb30c787ae51384c820520d62da03f6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 66314920}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb30c787ae51384c820520d62da03f6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

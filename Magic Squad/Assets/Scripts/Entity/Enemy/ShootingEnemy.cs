@@ -11,9 +11,27 @@ public class ShootingEnemy : EnemyBase
     [Header("Shooting")] 
     [SerializeField] private float shotCooldown = 3f;
     private float _lastShotTime;
-    
-    // References
+
+    [Header("References")] 
+    [SerializeField] private GameObject projectilePrefab;
     private GameObject _player;
+
+    // Projectile Stats
+    
+    public enum Stats
+    {
+        Damage = 0,
+        Speed = 1,
+        Range = 2,
+    }
+    
+    // Eventually take stats stuff out of this class and into a class both player and enemy use
+    private readonly Dictionary<Stats, float> _projectileStats = new ()
+    {
+        { Stats.Damage, 10f },
+        { Stats.Speed, 10f },
+        { Stats.Range, 40f },
+    };
 
     private void Start()
     {
@@ -62,6 +80,9 @@ public class ShootingEnemy : EnemyBase
 
     private void Shoot()
     {
-        Debug.Log("shoot");
+        Transform myTransform = transform;
+        GameObject projectile = Instantiate(projectilePrefab, myTransform.position, myTransform.rotation);
+        Vector3 direction = (_player.transform.position - transform.position).normalized; // Gets direction of player
+        projectile.GetComponent<ShootingProjectile>().ProjectileInitialize(_projectileStats, direction);
     }
 }
