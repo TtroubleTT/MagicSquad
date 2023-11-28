@@ -33,6 +33,7 @@ public class SoulStrike : MonoBehaviour, ICombat
 
         if (hitEnemy)
         {
+            // If there is a better way to do this please tell me
             hitInfo.transform.gameObject.GetComponent<EnemyBase>().SubtractHealth(Damage);
         }
     }
