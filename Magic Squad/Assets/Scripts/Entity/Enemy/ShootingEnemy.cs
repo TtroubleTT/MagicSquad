@@ -18,7 +18,6 @@ public class ShootingEnemy : EnemyBase
     private Transform _playerTransform;
 
     // Projectile Stats
-    
     public enum Stats
     {
         Damage = 0,
@@ -30,8 +29,8 @@ public class ShootingEnemy : EnemyBase
     private readonly Dictionary<Stats, float> _projectileStats = new ()
     {
         { Stats.Damage, 10f },
-        { Stats.Speed, 30f },
-        { Stats.Range, 40f },
+        { Stats.Speed, 50f },
+        { Stats.Range, 70f },
     };
 
     private void Start()

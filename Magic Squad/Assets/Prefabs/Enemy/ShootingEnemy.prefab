@@ -131,7 +131,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -148,6 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f20220ea8427b4cbef0e61b733298b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 30
-  shotCooldown: 3
+  range: 60
+  shotCooldown: 1
   projectilePrefab: {fileID: 1505275376173301197, guid: 30623effe3b900c42afb7b7b6ef14fbb, type: 3}
