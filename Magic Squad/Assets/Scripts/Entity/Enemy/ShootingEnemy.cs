@@ -15,6 +15,7 @@ public class ShootingEnemy : EnemyBase
     [Header("References")] 
     [SerializeField] private GameObject projectilePrefab;
     private GameObject _player;
+    private Transform _playerTransform;
 
     // Projectile Stats
     
@@ -29,17 +30,19 @@ public class ShootingEnemy : EnemyBase
     private readonly Dictionary<Stats, float> _projectileStats = new ()
     {
         { Stats.Damage, 10f },
-        { Stats.Speed, 10f },
+        { Stats.Speed, 30f },
         { Stats.Range, 40f },
     };
 
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
+        _playerTransform = _player.transform;
     }
 
     private void Update()
     {
+        transform.LookAt(_playerTransform);
         CheckShoot();
     }
 
