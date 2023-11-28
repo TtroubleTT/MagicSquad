@@ -15,6 +15,12 @@ public class ShootingProjectile : MonoBehaviour
     // Physics
     private Vector3 _direction;
 
+    private void Start()
+    {
+        // Lifespan of projectile
+        Destroy(gameObject, _range / _speed);
+    }
+
     public void ProjectileInitialize(Dictionary<ShootingEnemy.Stats, float> stats, Vector3 direction)
     {
         _damage = stats[ShootingEnemy.Stats.Damage];
@@ -28,5 +34,15 @@ public class ShootingProjectile : MonoBehaviour
     private void ProjectileMove()
     {
         rb.AddForce(_direction * _speed, ForceMode.Impulse);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerBase>().SubtractHealth(_damage);
+        }
+        
+        Destroy(gameObject);
     }
 }
