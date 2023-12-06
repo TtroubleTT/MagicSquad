@@ -14,33 +14,37 @@ public class SoulMeter : MonoBehaviour
 
     private void Start()
     {
-        barImage = GetComponent<Image>();
-        barImage.fillAmount = .5f;
+        _soulManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SoulManager>();
+        float currentSoul = _soulManager.GetCurrentSoul();
+        float maxSoul = _soulManager.GetMaxSoul();
 
-        // This is how you get the script so you can reference items in the soul manager
-        _soulManager = GetComponent<SoulManager>();
-        float currentSoul = _soulManager.GetCurrentSoul(); // This is just an example this is how you can grab info from that other clas
+        barImage = GetComponent<Image>();
+        Debug.Log(currentSoul/maxSoul);
+        barImage.fillAmount = currentSoul/maxSoul;
+
     }
 
     public void SpendSoul(int amount) //spending a soul function, can be used for abilities
     {
         float currentSoul = _soulManager.GetCurrentSoul();
+        float maxSoul = _soulManager.GetMaxSoul();
 
         if (currentSoul >= amount)
         {
             currentSoul -= amount;
-            barImage.fillAmount = currentSoul;
+            barImage.fillAmount = currentSoul/maxSoul;
         }
     }
 
     public void AddSoul(int amount) //gaining a soul from enemy drops and however we allow them to be picked up
     {
         float currentSoul = _soulManager.GetCurrentSoul();
+        float maxSoul = _soulManager.GetMaxSoul();
 
         if (currentSoul <= amount)
         {
             currentSoul += amount;
-            barImage.fillAmount = currentSoul;
+            barImage.fillAmount = currentSoul/maxSoul;
         }
     }
 
