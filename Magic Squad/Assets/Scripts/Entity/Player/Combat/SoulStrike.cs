@@ -6,18 +6,24 @@ using UnityEngine;
 // Close range attack
 public class SoulStrike : MonoBehaviour, ICombat
 {
-    public float Damage { get; set; } = 50f;
+    public float Damage { get; set; }
 
     [Header("References")]
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform cam;
 
-    [Header("Attack")]
+    [Header("Attack")] 
+    [SerializeField] private float damage = 50f;
     [SerializeField] private float attackDistance = 6f;
     [SerializeField] private float attackWidth = 2.5f;
     [SerializeField] private KeyCode attackKey = KeyCode.Mouse0;
     [SerializeField] private float cooldown = 1f;
     private float _lastAttack;
+
+    private void Start()
+    {
+        Damage = damage;
+    }
 
     private void Update()
     {
@@ -30,10 +36,12 @@ public class SoulStrike : MonoBehaviour, ICombat
 
     public void Attack()
     {
+        Debug.Log("attack");
         bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
 
         if (hitEnemy)
         {
+            Debug.Log("hit");
             // If there is a better way to do this please tell me
             hitInfo.transform.gameObject.GetComponent<EnemyBase>().SubtractHealth(Damage);
         }

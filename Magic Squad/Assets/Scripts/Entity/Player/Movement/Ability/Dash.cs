@@ -6,6 +6,7 @@ using UnityEngine;
 public class Dash : AbilityBase
 {
     [Header("Dashing")] 
+    [SerializeField] private float soulCost = 10f;
     [SerializeField] private float dashSpeed = 50;
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashCooldown;
@@ -22,7 +23,7 @@ public class Dash : AbilityBase
     private PlayerMovement _playerMovement;
 
     // Ability Base Overrides
-    protected override float SoulCost { get; set; } = 10f;
+    protected override float SoulCost { get; set; }
 
     protected override bool DoAbility()
     {
@@ -42,6 +43,7 @@ public class Dash : AbilityBase
 
     private void Start()
     {
+        SoulCost = soulCost;
         _playerMovement = GetComponent<PlayerMovement>();
     }
 
