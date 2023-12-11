@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1827088416964060040}
   - component: {fileID: 2916955876139936306}
   - component: {fileID: 8872730403723145126}
+  - component: {fileID: 113852162472059025}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -245,6 +246,26 @@ MonoBehaviour:
   healAmount: 10
   healCooldown: 0.3
   healKey: 113
+--- !u!114 &113852162472059025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523647103476993651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88bf093803e4d7498bffd8f2610aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTrans: {fileID: 5303126048535765995}
+  projectilePrefab: {fileID: 1919913695092184, guid: ce33864eafe72fa4096e91accab040f8, type: 3}
+  attackKey: 324
+  soulCost: 20
+  attackCooldown: 0.5
+  damage: 40
+  speed: 50
+  range: 120
 --- !u!1 &4424734255451308140
 GameObject:
   m_ObjectHideFlags: 0

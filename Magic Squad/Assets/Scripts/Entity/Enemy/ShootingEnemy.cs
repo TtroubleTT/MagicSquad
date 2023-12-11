@@ -37,7 +37,6 @@ public class ShootingEnemy : EnemyBase
         Range = 2,
     }
     
-    // Eventually take stats stuff out of this class and into a class both player and enemy use
     private readonly Dictionary<Stats, float> _projectileStats = new();
 
     public override bool SubtractHealth(float amount)

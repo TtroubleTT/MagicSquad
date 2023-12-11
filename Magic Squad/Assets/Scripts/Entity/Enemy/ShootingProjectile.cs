@@ -46,10 +46,15 @@ public class ShootingProjectile : MonoBehaviour
         
         if (other.gameObject.CompareTag("Player"))
         {
-            _lastHit = Time.time;
             other.gameObject.GetComponent<PlayerBase>().SubtractHealth(_damage);
         }
         
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<EnemyBase>().SubtractHealth(_damage);
+        }
+        
+        _lastHit = Time.time;
         Destroy(gameObject);
     }
 }
