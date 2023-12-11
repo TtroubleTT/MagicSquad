@@ -13,7 +13,8 @@ public class SoulStrike : MonoBehaviour, ICombat
     [SerializeField] private Transform cam;
 
     [Header("Attack")]
-    [SerializeField] private float attackDistance = 5f;
+    [SerializeField] private float attackDistance = 6f;
+    [SerializeField] private float attackWidth = 2.5f;
     [SerializeField] private KeyCode attackKey = KeyCode.Mouse0;
     [SerializeField] private float cooldown = 1f;
     private float _lastAttack;
@@ -29,7 +30,7 @@ public class SoulStrike : MonoBehaviour, ICombat
 
     public void Attack()
     {
-        bool hitEnemy = Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, attackDistance, enemyLayer);
+        bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
 
         if (hitEnemy)
         {

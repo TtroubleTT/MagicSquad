@@ -16,6 +16,7 @@ public class ShootingEnemy : EnemyBase
     [SerializeField] private GameObject projectilePrefab;
     private GameObject _player;
     private Transform _playerTransform;
+    private Animator _animator;
 
     // Projectile Stats
     public enum Stats
@@ -33,9 +34,20 @@ public class ShootingEnemy : EnemyBase
         { Stats.Range, 70f },
     };
 
+    public override bool SubtractHealth(float amount)
+    {
+        bool stillAlive = base.SubtractHealth(amount);
+        
+        //if (stillAlive)
+            //_animator.Play("GetHit");
+
+        return stillAlive;
+    }
+
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
+        _animator = GetComponent<Animator>();
         _playerTransform = _player.transform;
     }
 
@@ -76,12 +88,13 @@ public class ShootingEnemy : EnemyBase
         if (Time.time - _lastShotTime > shotCooldown && IsInRange() && InLineOfSight())
         {
             _lastShotTime = Time.time;
-            Shoot();
+            //Shoot();
         }
     }
 
     private void Shoot()
     {
+        _animator.Play("Attack01");
         Transform myTransform = transform;
         GameObject projectile = Instantiate(projectilePrefab, myTransform.position + myTransform.forward + myTransform.up, myTransform.rotation);
         Vector3 direction = (_player.transform.position - transform.position).normalized; // Gets direction of player
