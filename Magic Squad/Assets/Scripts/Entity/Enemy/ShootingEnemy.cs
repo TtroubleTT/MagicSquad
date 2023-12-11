@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ShootingEnemy : EnemyBase
 {
-    [Header("Player Detection")] 
+    [Header("Enemy Stats")]
+    [SerializeField] private float maxHealth = 50f;
+    [SerializeField] private float currentHealth = 50f;
     [SerializeField] private float shotRange = 30f;
-
-    [Header("Shooting")] 
     [SerializeField] private float shotCooldown = 3f;
     private float _lastShotTime;
 
@@ -54,6 +54,10 @@ public class ShootingEnemy : EnemyBase
     private void Start()
     {
         InitializeStats();
+
+        MaxHealth = maxHealth;
+        CurrentHealth = currentHealth;
+        
         _player = GameObject.FindGameObjectWithTag("Player");
         _animator = GetComponent<Animator>();
         _playerTransform = _player.transform;

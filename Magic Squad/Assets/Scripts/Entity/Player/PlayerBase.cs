@@ -7,10 +7,15 @@ using UnityEngine.UI;
 
 public class PlayerBase : EntityBase
 {
-    protected override float MaxHealth { get; } = 100;
-    protected override float CurrentHealth { get; set; } = 100;
+    [Header("Player Stats")] 
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth = 100f;
+    
+    protected override float MaxHealth { get; set;  }
+    protected override float CurrentHealth { get; set; }
 
     private Image _barImage;
+    
     protected override void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -18,6 +23,9 @@ public class PlayerBase : EntityBase
 
     private void Awake()
     {
+        MaxHealth = maxHealth;
+        CurrentHealth = currentHealth;
+        
         _barImage = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
         _barImage.fillAmount = CurrentHealth / MaxHealth;
     }

@@ -6,18 +6,24 @@ using UnityEngine;
 // Close range attack
 public class SoulStrike : MonoBehaviour, ICombat
 {
-    public float Damage { get; set; } = 50f;
+    public float Damage { get; set; }
 
     [Header("References")]
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform cam;
 
-    [Header("Attack")]
+    [Header("Attack")] 
+    [SerializeField] private float damage = 50f;
     [SerializeField] private float attackDistance = 6f;
     [SerializeField] private float attackWidth = 2.5f;
     [SerializeField] private KeyCode attackKey = KeyCode.Mouse0;
     [SerializeField] private float cooldown = 1f;
     private float _lastAttack;
+
+    private void Start()
+    {
+        Damage = damage;
+    }
 
     private void Update()
     {
