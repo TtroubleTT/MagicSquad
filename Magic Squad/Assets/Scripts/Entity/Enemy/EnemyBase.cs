@@ -27,7 +27,7 @@ public class EnemyBase : EntityBase
     private void SpawnSoul()
     {
         Transform myTransform = transform;
-        GameObject soul = Instantiate(_soulObjectPrefab, myTransform.position, myTransform.rotation);
+        GameObject soul = Instantiate(_soulObjectPrefab, myTransform.position + myTransform.up, myTransform.rotation);
         soul.GetComponent<SoulObject>().InitializeSoulAmount(SoulDropAmount);
     }
 }
