@@ -5,18 +5,24 @@ using UnityEngine;
 
 public class ShootingEnemy : EnemyBase
 {
-    [Header("Player Detection")] 
-    [SerializeField] private float range = 30f;
-
-    [Header("Shooting")] 
+    [Header("Enemy Stats")]
+    [SerializeField] private float maxHealth = 50f;
+    [SerializeField] private float currentHealth = 50f;
+    [SerializeField] private float shotRange = 30f;
     [SerializeField] private float shotCooldown = 3f;
     private float _lastShotTime;
 
+    [Header("Projectile Stats")] 
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float speed = 50f;
+    [SerializeField] private float range = 70f;
+    
     [Header("References")] 
     [SerializeField] private GameObject projectilePrefab;
     private GameObject _player;
     private Transform _playerTransform;
-
+    private Animator _animator;
+    
     // Projectile Stats
     public enum Stats
     {
@@ -26,22 +32,42 @@ public class ShootingEnemy : EnemyBase
     }
     
     // Eventually take stats stuff out of this class and into a class both player and enemy use
-    private readonly Dictionary<Stats, float> _projectileStats = new ()
+    private readonly Dictionary<Stats, float> _projectileStats = new();
+
+    public override bool SubtractHealth(float amount)
     {
-        { Stats.Damage, 10f },
-        { Stats.Speed, 50f },
-        { Stats.Range, 70f },
-    };
+        bool stillAlive = base.SubtractHealth(amount);
+        
+        if (stillAlive)
+            _animator.Play("GetHit");
+
+        return stillAlive;
+    }
+
+    private void InitializeStats()
+    {
+        _projectileStats.Add(Stats.Damage, damage);
+        _projectileStats.Add(Stats.Speed, speed);
+        _projectileStats.Add(Stats.Range, range);
+    }
 
     private void Start()
     {
+        InitializeStats();
+
+        MaxHealth = maxHealth;
+        CurrentHealth = currentHealth;
+        
         _player = GameObject.FindGameObjectWithTag("Player");
+        _animator = GetComponent<Animator>();
         _playerTransform = _player.transform;
     }
 
     private void Update()
     {
-        transform.LookAt(_playerTransform);
+        Vector3 playerPos = _playerTransform.position;
+        Vector3 lookPoint = new Vector3(playerPos.x, transform.position.y, playerPos.z);
+        transform.LookAt(lookPoint);
         CheckShoot();
     }
 
@@ -50,7 +76,7 @@ public class ShootingEnemy : EnemyBase
     {
         float distance = Vector3.Distance(_player.transform.position, transform.position);
 
-        if (distance <= range)
+        if (distance <= shotRange)
             return true;
 
         return false;
@@ -59,7 +85,7 @@ public class ShootingEnemy : EnemyBase
     // Checks if the player is within the enemies line of sight
     private bool InLineOfSight()
     {
-        if (Physics.Raycast(transform.position, (_player.transform.position - transform.position), out RaycastHit hitInfo, range))
+        if (Physics.Raycast(transform.position, (_player.transform.position - transform.position), out RaycastHit hitInfo, shotRange))
         {
             if (hitInfo.transform.gameObject == _player)
             {
@@ -82,6 +108,7 @@ public class ShootingEnemy : EnemyBase
 
     private void Shoot()
     {
+        _animator.Play("Attack01");
         Transform myTransform = transform;
         GameObject projectile = Instantiate(projectilePrefab, myTransform.position + myTransform.forward + myTransform.up, myTransform.rotation);
         Vector3 direction = (_player.transform.position - transform.position).normalized; // Gets direction of player
