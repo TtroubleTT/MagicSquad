@@ -24,31 +24,16 @@ public class PlayerBase : EntityBase
 
     public override bool AddHealth(float amount)
     {
-        if (CurrentHealth + amount > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-            _barImage.fillAmount = CurrentHealth / MaxHealth;
-            return false;
-        }
-
-        CurrentHealth += amount;
+        bool addedHealth = base.AddHealth(amount);
         _barImage.fillAmount = CurrentHealth / MaxHealth;
-        return true;
+        return addedHealth;
     }
     
     // Returns a bool of weather or not the entity is alive
     public override bool SubtractHealth(float amount)
     {
-        if (CurrentHealth - amount <= 0)
-        {
-            CurrentHealth = 0;
-            _barImage.fillAmount = CurrentHealth / MaxHealth;
-            Die();
-            return false;
-        }
-        
-        CurrentHealth -= amount;
+        bool subtractedHealth = base.SubtractHealth(amount);
         _barImage.fillAmount = CurrentHealth / MaxHealth;
-        return true;
+        return subtractedHealth;
     }
 }

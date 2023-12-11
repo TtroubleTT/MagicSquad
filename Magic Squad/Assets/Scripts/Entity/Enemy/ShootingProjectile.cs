@@ -14,6 +14,9 @@ public class ShootingProjectile : MonoBehaviour
     
     // Physics
     private Vector3 _direction;
+    
+    // Cooldown
+    private float _lastHit = 0;
 
     private void Start()
     {
@@ -38,8 +41,12 @@ public class ShootingProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (Time.time - _lastHit <= .5)
+            return;
+        
         if (other.gameObject.CompareTag("Player"))
         {
+            _lastHit = Time.time;
             other.gameObject.GetComponent<PlayerBase>().SubtractHealth(_damage);
         }
         
