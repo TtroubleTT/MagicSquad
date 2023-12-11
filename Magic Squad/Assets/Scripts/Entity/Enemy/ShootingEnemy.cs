@@ -38,8 +38,8 @@ public class ShootingEnemy : EnemyBase
     {
         bool stillAlive = base.SubtractHealth(amount);
         
-        if (stillAlive)
-            _animator.Play("GetHit");
+        //if (stillAlive)
+            //_animator.Play("GetHit");
 
         return stillAlive;
     }
@@ -88,7 +88,7 @@ public class ShootingEnemy : EnemyBase
         if (Time.time - _lastShotTime > shotCooldown && IsInRange() && InLineOfSight())
         {
             _lastShotTime = Time.time;
-            Shoot();
+            //Shoot();
         }
     }
 
