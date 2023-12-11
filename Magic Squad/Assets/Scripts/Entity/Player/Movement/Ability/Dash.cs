@@ -8,13 +8,12 @@ public class Dash : AbilityBase
     protected override float SoulCost { get; set; }
     
     [Header("Dashing")] 
-    [SerializeField] private float soulCost = 10f;
+    [SerializeField] private float soulCost = 20f;
     [SerializeField] private float dashSpeed = 50;
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashCooldown;
     [HideInInspector] public bool isDashing;
     private float _dashStartTime;
-    private float _dashCooldownStart;
     private Vector3 _velocity;
 
     [Header("Input")] 

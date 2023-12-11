@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3798158640156584629}
   - component: {fileID: 1827088416964060040}
   - component: {fileID: 2916955876139936306}
+  - component: {fileID: 8872730403723145126}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -144,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e65b7429918674cb858995819fae6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulCost: 10
+  soulCost: 20
   dashSpeed: 20
   dashDuration: 0.5
   dashCooldown: 0.6
@@ -228,6 +229,22 @@ MonoBehaviour:
   attackWidth: 2.5
   attackKey: 323
   cooldown: 1
+--- !u!114 &8872730403723145126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523647103476993651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5553e26c547e40f8b5730fc38a4d9495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soulCost: 10
+  healAmount: 10
+  healCooldown: 0.3
+  healKey: 113
 --- !u!1 &4424734255451308140
 GameObject:
   m_ObjectHideFlags: 0

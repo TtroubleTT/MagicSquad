@@ -35,6 +35,16 @@ public abstract class EntityBase : MonoBehaviour
         return true;
     }
 
+    public float GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return CurrentHealth;
+    }
+
     protected abstract void InitializeAbstractedStats();
 
     protected abstract void Die();
