@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddSoul : MonoBehaviour
+public class SoulObject : MonoBehaviour
 {
     private SoulManager _soulManager;
+
+    [SerializeField] 
+    private float soulAmount;
+    
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // This is how you get the script so you can reference items in the soul manager
         _soulManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SoulManager>();
@@ -16,8 +20,15 @@ public class AddSoul : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _soulManager.AddSoul(10);
-            Destroy(gameObject);
+            bool addedSoul = _soulManager.AddSoul(soulAmount);
+            
+            if (addedSoul)
+                Destroy(gameObject);
         }
+    }
+    
+    public void InitializeSoulAmount(float amount)
+    {
+        soulAmount = amount;
     }
 }

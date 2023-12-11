@@ -26,11 +26,16 @@ public class SoulManager : MonoBehaviour
     // Returns a bool stating whether or not it was able to add the full amount
     public bool AddSoul(float amount)
     {
+        if (currentSoul >= maxSoul)
+        {
+            return false;
+        }
+        
         if (amount + currentSoul > maxSoul)
         {
             currentSoul = maxSoul;
             _barImage.fillAmount = currentSoul/maxSoul;
-            return false;
+            return true;
         }
         
         currentSoul += amount;

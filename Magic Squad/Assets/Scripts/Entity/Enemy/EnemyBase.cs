@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,13 @@ public class EnemyBase : EntityBase
 
     protected virtual float SoulDropAmount { get; set; } = 20f;
 
+    private GameObject _soulObjectPrefab;
+
+    private void Awake()
+    {
+        _soulObjectPrefab = GameObject.FindGameObjectWithTag("SoulObject");
+    }
+
     protected override void Die()
     {
         SpawnSoul();
@@ -18,6 +26,8 @@ public class EnemyBase : EntityBase
 
     private void SpawnSoul()
     {
-        // spawn soul once there is a soul object made
+        Transform myTransform = transform;
+        GameObject soul = Instantiate(_soulObjectPrefab, myTransform.position, myTransform.rotation);
+        soul.GetComponent<SoulObject>().InitializeSoulAmount(SoulDropAmount);
     }
 }
