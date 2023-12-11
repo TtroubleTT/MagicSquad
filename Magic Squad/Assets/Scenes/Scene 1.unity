@@ -15538,6 +15538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ece2e7739ecb054d8f3ce6297864e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulAmount: 0
 --- !u!1 &1388369509
 GameObject:
   m_ObjectHideFlags: 0
@@ -17008,9 +17009,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoulObject (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8457513663767271317, guid: 0c7ea7a0231a40d41a47fe516071cb1b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.28
+    - target: {fileID: 8795123433631819686, guid: 0c7ea7a0231a40d41a47fe516071cb1b, type: 3}
+      propertyPath: soulAmount
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20612,6 +20613,10 @@ PrefabInstance:
     - target: {fileID: 5497603085946652833, guid: 0c7ea7a0231a40d41a47fe516071cb1b, type: 3}
       propertyPath: m_Name
       value: SoulObject (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795123433631819686, guid: 0c7ea7a0231a40d41a47fe516071cb1b, type: 3}
+      propertyPath: soulAmount
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
