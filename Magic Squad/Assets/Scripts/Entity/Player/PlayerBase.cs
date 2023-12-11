@@ -10,7 +10,7 @@ public class PlayerBase : EntityBase
     protected override float MaxHealth { get; } = 100;
     protected override float CurrentHealth { get; set; } = 100;
 
-    private Image _barImage; 
+    private Image _barImage;
     protected override void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
