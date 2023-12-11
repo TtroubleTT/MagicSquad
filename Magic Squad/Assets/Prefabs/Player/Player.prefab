@@ -176,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSoul: 100
   minSoul: 0
-  currentSoul: 50
+  currentSoul: 100
 --- !u!54 &1827088416964060040
 Rigidbody:
   m_ObjectHideFlags: 0
