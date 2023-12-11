@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddSoul : MonoBehaviour
+public class SoulObject : MonoBehaviour
 {
     private SoulManager _soulManager;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +17,10 @@ public class AddSoul : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _soulManager.AddSoul(10);
-            Destroy(gameObject);
+            bool addedSoul = _soulManager.AddSoul(10);
+            
+            if (addedSoul)
+                Destroy(gameObject);
         }
     }
 }
