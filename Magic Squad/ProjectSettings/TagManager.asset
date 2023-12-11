@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - SoulBar
   - Save
+  - SoulObject
   layers:
   - Default
   - TransparentFX
