@@ -14,8 +14,7 @@ public class SoulManager : MonoBehaviour
 
     [SerializeField]
     private float currentSoul = 50;
-
-    [SerializeField]
+    
     private Image barImage;
 
     private SoulManager _soulManager;
@@ -26,8 +25,7 @@ public class SoulManager : MonoBehaviour
         _soulManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SoulManager>();
         float currentSoul = _soulManager.GetCurrentSoul();
         float maxSoul = _soulManager.GetMaxSoul();
-
-        barImage = GetComponent<Image>();
+        
         Debug.Log(currentSoul / maxSoul);
         barImage.fillAmount = currentSoul / maxSoul;
 
