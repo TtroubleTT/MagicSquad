@@ -6,18 +6,23 @@ using UnityEngine;
 public class ShootingEnemy : EnemyBase
 {
     [Header("Player Detection")] 
-    [SerializeField] private float range = 30f;
+    [SerializeField] private float shotRange = 30f;
 
     [Header("Shooting")] 
     [SerializeField] private float shotCooldown = 3f;
     private float _lastShotTime;
 
+    [Header("Projectile Stats")] 
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float speed = 50f;
+    [SerializeField] private float range = 70f;
+    
     [Header("References")] 
     [SerializeField] private GameObject projectilePrefab;
     private GameObject _player;
     private Transform _playerTransform;
     private Animator _animator;
-
+    
     // Projectile Stats
     public enum Stats
     {
@@ -27,12 +32,7 @@ public class ShootingEnemy : EnemyBase
     }
     
     // Eventually take stats stuff out of this class and into a class both player and enemy use
-    private readonly Dictionary<Stats, float> _projectileStats = new ()
-    {
-        { Stats.Damage, 10f },
-        { Stats.Speed, 50f },
-        { Stats.Range, 70f },
-    };
+    private readonly Dictionary<Stats, float> _projectileStats = new();
 
     public override bool SubtractHealth(float amount)
     {
@@ -44,8 +44,16 @@ public class ShootingEnemy : EnemyBase
         return stillAlive;
     }
 
+    private void InitializeStats()
+    {
+        _projectileStats.Add(Stats.Damage, damage);
+        _projectileStats.Add(Stats.Speed, speed);
+        _projectileStats.Add(Stats.Range, range);
+    }
+
     private void Start()
     {
+        InitializeStats();
         _player = GameObject.FindGameObjectWithTag("Player");
         _animator = GetComponent<Animator>();
         _playerTransform = _player.transform;
@@ -64,7 +72,7 @@ public class ShootingEnemy : EnemyBase
     {
         float distance = Vector3.Distance(_player.transform.position, transform.position);
 
-        if (distance <= range)
+        if (distance <= shotRange)
             return true;
 
         return false;
@@ -73,7 +81,7 @@ public class ShootingEnemy : EnemyBase
     // Checks if the player is within the enemies line of sight
     private bool InLineOfSight()
     {
-        if (Physics.Raycast(transform.position, (_player.transform.position - transform.position), out RaycastHit hitInfo, range))
+        if (Physics.Raycast(transform.position, (_player.transform.position - transform.position), out RaycastHit hitInfo, shotRange))
         {
             if (hitInfo.transform.gameObject == _player)
             {
