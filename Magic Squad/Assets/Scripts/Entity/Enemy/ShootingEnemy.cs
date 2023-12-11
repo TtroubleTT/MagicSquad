@@ -9,8 +9,6 @@ public class ShootingEnemy : EnemyBase
     
     protected override float CurrentHealth { get; set; }
 
-    protected override float SoulDropAmount { get; set; }
-    
     [Header("Enemy Stats")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth = 50f;
@@ -26,6 +24,7 @@ public class ShootingEnemy : EnemyBase
     
     [Header("References")] 
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform wandTransform;
     private GameObject _player;
     private Transform _playerTransform;
     private Animator _animator;
@@ -121,8 +120,8 @@ public class ShootingEnemy : EnemyBase
     private void Shoot()
     {
         _animator.Play("Attack01");
-        Transform myTransform = transform;
-        GameObject projectile = Instantiate(projectilePrefab, myTransform.position + (myTransform.forward * 2) + (myTransform.up * 1), myTransform.rotation);
+        Transform myTransform = wandTransform;
+        GameObject projectile = Instantiate(projectilePrefab, myTransform.position + (myTransform.forward * 2) + myTransform.up, myTransform.rotation);
         Vector3 direction = (_player.transform.position - transform.position).normalized; // Gets direction of player
         projectile.GetComponent<ShootingProjectile>().ProjectileInitialize(_projectileStats, direction);
     }

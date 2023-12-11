@@ -6,11 +6,7 @@ using UnityEngine.SceneManagement;
 
 public abstract class EnemyBase : EntityBase
 {
-    protected override float MaxHealth { get; set; }
-    
-    protected override float CurrentHealth { get; set; }
-
-    protected virtual float SoulDropAmount { get; set; }
+    protected virtual float SoulDropAmount { get; set; } = 10;
 
     private GameObject _soulObjectPrefab;
 
