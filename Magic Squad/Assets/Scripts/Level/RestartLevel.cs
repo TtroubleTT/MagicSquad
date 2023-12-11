@@ -14,7 +14,7 @@ public class RestartLevel : MonoBehaviour
         }
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
