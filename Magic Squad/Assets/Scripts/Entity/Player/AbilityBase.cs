@@ -14,6 +14,8 @@ public abstract class AbilityBase : MonoBehaviour
         _soulManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SoulManager>();
     }
 
+    protected abstract void InitializeAbstractedStats();
+
     protected virtual bool DoAbility()
     {
         bool canDoAbility = _soulManager.SubtractSoul(SoulCost);

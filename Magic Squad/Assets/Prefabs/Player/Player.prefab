@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e65b7429918674cb858995819fae6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulCost: 10
   dashSpeed: 20
   dashDuration: 0.5
   dashCooldown: 0.6
@@ -162,6 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8037e9ac91a676d4998b8ca85364a48b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
 --- !u!114 &3798158640156584629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +223,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   cam: {fileID: 5303126048535765995}
-  attackDistance: 5
+  damage: 50
+  attackDistance: 6
+  attackWidth: 2.5
   attackKey: 323
   cooldown: 1
 --- !u!1 &4424734255451308140

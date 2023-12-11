@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class ShootingEnemy : EnemyBase
 {
+    protected override float MaxHealth { get; set; }
+    
+    protected override float CurrentHealth { get; set; }
+
+    protected override float SoulDropAmount { get; set; }
+    
     [Header("Enemy Stats")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth = 50f;
+    [SerializeField] private float soulAmount = 20f;
     [SerializeField] private float shotRange = 30f;
     [SerializeField] private float shotCooldown = 3f;
     private float _lastShotTime;
@@ -43,6 +50,13 @@ public class ShootingEnemy : EnemyBase
 
         return stillAlive;
     }
+    
+    protected override void InitializeAbstractedStats()
+    {
+        MaxHealth = maxHealth;
+        CurrentHealth = currentHealth;
+        SoulDropAmount = soulAmount;
+    }
 
     private void InitializeStats()
     {
@@ -54,9 +68,7 @@ public class ShootingEnemy : EnemyBase
     private void Start()
     {
         InitializeStats();
-
-        MaxHealth = maxHealth;
-        CurrentHealth = currentHealth;
+        InitializeAbstractedStats();
         
         _player = GameObject.FindGameObjectWithTag("Player");
         _animator = GetComponent<Animator>();
@@ -110,7 +122,7 @@ public class ShootingEnemy : EnemyBase
     {
         _animator.Play("Attack01");
         Transform myTransform = transform;
-        GameObject projectile = Instantiate(projectilePrefab, myTransform.position + myTransform.forward + myTransform.up, myTransform.rotation);
+        GameObject projectile = Instantiate(projectilePrefab, myTransform.position + (myTransform.forward * 2) + (myTransform.up * 1), myTransform.rotation);
         Vector3 direction = (_player.transform.position - transform.position).normalized; // Gets direction of player
         projectile.GetComponent<ShootingProjectile>().ProjectileInitialize(_projectileStats, direction);
     }

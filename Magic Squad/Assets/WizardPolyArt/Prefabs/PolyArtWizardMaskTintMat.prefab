@@ -2472,9 +2472,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f20220ea8427b4cbef0e61b733298b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 60
+  maxHealth: 50
+  currentHealth: 50
+  soulAmount: 20
+  shotRange: 50
   shotCooldown: 1
-  projectilePrefab: {fileID: 1505275376173301197, guid: 30623effe3b900c42afb7b7b6ef14fbb, type: 3}
+  damage: 10
+  speed: 50
+  range: 60
+  projectilePrefab: {fileID: 1919913695092184, guid: ce33864eafe72fa4096e91accab040f8, type: 3}
 --- !u!1 &1956949540428108
 GameObject:
   m_ObjectHideFlags: 0

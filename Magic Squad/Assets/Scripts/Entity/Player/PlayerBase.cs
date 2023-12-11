@@ -12,6 +12,7 @@ public class PlayerBase : EntityBase
     [SerializeField] private float currentHealth = 100f;
     
     protected override float MaxHealth { get; set;  }
+    
     protected override float CurrentHealth { get; set; }
 
     private Image _barImage;
@@ -21,13 +22,22 @@ public class PlayerBase : EntityBase
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void Awake()
+    protected override void InitializeAbstractedStats()
     {
         MaxHealth = maxHealth;
         CurrentHealth = currentHealth;
-        
+    }
+
+    private void InitializeHealthBar()
+    {
         _barImage = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
         _barImage.fillAmount = CurrentHealth / MaxHealth;
+    }
+
+    private void Awake()
+    {
+        InitializeAbstractedStats();
+        InitializeHealthBar();
     }
 
     public override bool AddHealth(float amount)

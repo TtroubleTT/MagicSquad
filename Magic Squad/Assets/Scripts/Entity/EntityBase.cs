@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class EntityBase : MonoBehaviour
 {
     protected abstract float MaxHealth { get; set;  }
+    
     protected abstract float CurrentHealth { get; set; }
 
     // Returns a bool of weather or not it could add the full health amount
@@ -33,6 +34,8 @@ public abstract class EntityBase : MonoBehaviour
         CurrentHealth -= amount;
         return true;
     }
+
+    protected abstract void InitializeAbstractedStats();
 
     protected abstract void Die();
 }
