@@ -3155,12 +3155,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Goal: You are part of the Magic Squad an elite group of soul magic users.
-    You were imprisoned for your use of soul magic which is a crime. Unfortunately
-    for them you have broken out of your cell and are on a mission to find the rest
-    of your Magic Squad. You must navigate levels of platforming and combat in the
-    hopes to find them. You can utalize an assortment of combat and utility abilities
-    that is powered from souls which you collect from fallen enemies.'
+  m_text: 'Soul Strike - A close range high lethal attack
+
+    Key: Left Click                           
+    Soul Cost: 0
+
+
+    Soul Blast - Shoots a blast of magic in the direction you
+    are aiming and damages anything it hits
+
+    Key: Right Click                         
+    Soul Cost: 20
+
+
+    Dash - Quickly move in a direction
+
+    Key: direction (WASD)
+    and E     Soul Cost: 20
+
+
+    Heal - Convert the lifeforce of collected souls
+    to your lifeforce to heal injuries
+
+    Key: Q                                        
+    Soul Cost: 10
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3187,8 +3208,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4565,7 +4586,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Movement Type:              Key:
+  m_text: 'Movement Type:         Key:
 
     Looking                       Mouse
 
