@@ -36,7 +36,7 @@ public class SoulStrike : MonoBehaviour, ICombat
 
     public void Attack()
     {
-        bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
+        bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward * .5f, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
 
         if (hitEnemy)
         {
