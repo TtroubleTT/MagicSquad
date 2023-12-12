@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     {
         InitializeAudio();
         musicSource.clip = background;
-        musicSource.volume = 0.6f;
+        musicSource.volume = 0.3f;
         musicSource.Play();
     }
 
