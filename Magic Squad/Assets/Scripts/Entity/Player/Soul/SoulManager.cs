@@ -15,13 +15,15 @@ public class SoulManager : MonoBehaviour
     private float currentSoul = 100;
     
     private Image _barImage;
+    private AudioManager _audioManager;
 
     private void Start()
     {
         _barImage = GameObject.FindGameObjectWithTag("SoulBar").GetComponent<Image>();
         _barImage.fillAmount = currentSoul / maxSoul;
-
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
+    
     // Returns a bool stating whether or not it was able to add the full amount
     public bool AddSoul(float amount)
     {
@@ -34,11 +36,13 @@ public class SoulManager : MonoBehaviour
         {
             currentSoul = maxSoul;
             _barImage.fillAmount = currentSoul/maxSoul;
+            _audioManager.PlaySoundEffect(AudioManager.AudioType.GainSoul);
             return true;
         }
         
         currentSoul += amount;
         _barImage.fillAmount = currentSoul / maxSoul;
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.GainSoul);
         return true;
     }
 

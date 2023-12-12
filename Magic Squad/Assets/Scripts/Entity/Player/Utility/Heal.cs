@@ -15,6 +15,7 @@ public class Heal : AbilityBase
     [SerializeField] private KeyCode healKey = KeyCode.Q;
 
     private PlayerBase _playerBase;
+    private AudioManager _audioManager;
     
     protected override float SoulCost { get; set; }
 
@@ -41,6 +42,7 @@ public class Heal : AbilityBase
     {
         InitializeAbstractedStats();
         _playerBase = GetComponent<PlayerBase>();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -50,6 +52,7 @@ public class Heal : AbilityBase
 
     private void DoHeal()
     {
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.Heal);
         _playerBase.AddHealth(healAmount);
         _lastHeal = Time.time;
     }

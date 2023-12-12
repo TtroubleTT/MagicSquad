@@ -9,7 +9,6 @@ public class AudioManager : MonoBehaviour
     
     [SerializeField] private AudioClip background;
     [SerializeField] private AudioClip death;
-    [SerializeField] private AudioClip walking;
     [SerializeField] private AudioClip takingDamage;
     [SerializeField] private AudioClip gainSoul;
     [SerializeField] private AudioClip dash;
@@ -22,7 +21,6 @@ public class AudioManager : MonoBehaviour
     {
         BackGround,
         Death,
-        Walking,
         TakingDamage,
         GainSoul,
         Dash,
@@ -38,7 +36,6 @@ public class AudioManager : MonoBehaviour
     {
         audioStorage.Add(AudioType.BackGround, background);
         audioStorage.Add(AudioType.Death, death);
-        audioStorage.Add(AudioType.Walking, walking);
         audioStorage.Add(AudioType.TakingDamage, takingDamage);
         audioStorage.Add(AudioType.GainSoul, gainSoul);
         audioStorage.Add(AudioType.Dash, dash);
@@ -60,7 +57,7 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip myClip = audioStorage[type];
         SFXSource.clip = myClip;
-        SFXSource.volume = .6f;
+        SFXSource.volume = .4f;
         SFXSource.Play();
     }
 }
