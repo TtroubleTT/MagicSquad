@@ -20,9 +20,12 @@ public class SoulStrike : MonoBehaviour, ICombat
     [SerializeField] private float cooldown = 1f;
     private float _lastAttack;
 
+    private AudioManager _audioManager;
+
     private void Start()
     {
         Damage = damage;
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -36,6 +39,7 @@ public class SoulStrike : MonoBehaviour, ICombat
 
     public void Attack()
     {
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.CloseAttack);
         bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
         if (hitEnemy)
         {
