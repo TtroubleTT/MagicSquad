@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class RestartLevel : MonoBehaviour
 {
+    private EnemyKills _enemyKills;
+    
+    private void Start()
+    {
+        _enemyKills = GameObject.FindGameObjectWithTag("KillUI").GetComponent<EnemyKills>();
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
@@ -16,6 +23,7 @@ public class RestartLevel : MonoBehaviour
 
     public void Respawn()
     {
+        _enemyKills.SaveData();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
