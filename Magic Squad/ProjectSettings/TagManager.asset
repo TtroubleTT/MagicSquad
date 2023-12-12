@@ -9,6 +9,8 @@ TagManager:
   - SoulBar
   - Save
   - SoulObject
+  - HealthBar
+  - Crosshair
   layers:
   - Default
   - TransparentFX
