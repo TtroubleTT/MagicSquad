@@ -24124,10 +24124,15 @@ MonoBehaviour:
   musicSource: {fileID: 1531014274}
   SFXSource: {fileID: 400862429}
   background: {fileID: 8300000, guid: 89f935015cc98724a862a586326fdf21, type: 3}
-  death: {fileID: 0}
-  walking: {fileID: 0}
-  takingDamage: {fileID: 0}
-  gainSoul: {fileID: 0}
+  death: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
+  walking: {fileID: 8300000, guid: 942019cf9ecd5854ebeb343b12b7f779, type: 3}
+  takingDamage: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
+  gainSoul: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
+  dash: {fileID: 8300000, guid: 80e397195ea2940b69ee7bdbded856a5, type: 3}
+  enemyDeath: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
+  heal: {fileID: 8300000, guid: 7e9ee6dc04a5d40d1a5dfc4beb9865e7, type: 3}
+  closeAttack: {fileID: 8300000, guid: 60a0682fbc82bd244bdae3f3445cfd17, type: 3}
+  projectile: {fileID: 8300000, guid: 1c296947519a8ef4380c5302267cf26d, type: 3}
 --- !u!4 &2093439650
 Transform:
   m_ObjectHideFlags: 0
