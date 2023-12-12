@@ -23,7 +23,6 @@ public class EnemyKills : MonoBehaviour
 
     public void SaveData()
     {
-        Debug.Log(_kills);
         PlayerPrefs.SetFloat("Kills", _kills);
     }
 
