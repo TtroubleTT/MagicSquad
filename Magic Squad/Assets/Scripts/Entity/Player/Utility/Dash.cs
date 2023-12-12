@@ -22,6 +22,7 @@ public class Dash : AbilityBase
     [Header("References")] 
     [SerializeField] private CharacterController controller;
     private PlayerMovement _playerMovement;
+    private AudioManager _audioManager;
 
     protected override void InitializeAbstractedStats()
     {
@@ -48,6 +49,7 @@ public class Dash : AbilityBase
     {
         InitializeAbstractedStats();
         _playerMovement = GetComponent<PlayerMovement>();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -86,6 +88,7 @@ public class Dash : AbilityBase
 
     private void StartDash(float x, float z)
     {
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.Dash);
         isDashing = true;
         _playerMovement.dashSpeed = dashSpeed;
         _dashStartTime = Time.time;

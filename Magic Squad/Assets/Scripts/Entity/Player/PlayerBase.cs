@@ -16,9 +16,11 @@ public class PlayerBase : EntityBase
     protected override float CurrentHealth { get; set; }
 
     private Image _barImage;
+    private AudioManager _audioManager;
     
     protected override void Die()
     {
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.Death);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -36,6 +38,7 @@ public class PlayerBase : EntityBase
 
     private void Awake()
     {
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         InitializeAbstractedStats();
         InitializeHealthBar();
     }
@@ -52,6 +55,7 @@ public class PlayerBase : EntityBase
     {
         bool subtractedHealth = base.SubtractHealth(amount);
         _barImage.fillAmount = CurrentHealth / MaxHealth;
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.TakingDamage);
         return subtractedHealth;
     }
 }

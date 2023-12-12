@@ -28,6 +28,8 @@ public class SoulBlast : AbilityBase, ICombat
     
     private readonly Dictionary<ShootingEnemy.Stats, float> _projectileStats = new();
 
+    private AudioManager _audioManager;
+
     protected override void InitializeAbstractedStats()
     {
         Damage = damage;
@@ -56,6 +58,7 @@ public class SoulBlast : AbilityBase, ICombat
     {
         InitializeAbstractedStats();
         InitializeStats();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -74,6 +77,7 @@ public class SoulBlast : AbilityBase, ICombat
 
     public void Attack()
     {
+        _audioManager.PlaySoundEffect(AudioManager.AudioType.Projectile);
         GameObject projectile = Instantiate(projectilePrefab, camTrans.position + (camTrans.forward * 2), camTrans.rotation);
         Vector3 direction = camTrans.forward.normalized; // Gets direction player is looking
         projectile.GetComponent<ShootingProjectile>().ProjectileInitialize(_projectileStats, direction);
