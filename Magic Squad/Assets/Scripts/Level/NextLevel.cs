@@ -5,17 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class NextLevel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public string sceneName;
     private void OnTriggerEnter(Collider other)
     {
@@ -23,9 +12,5 @@ public class NextLevel : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
-        //if (other.tag == "NextLevel")
-        //{
-            //SceneManager.LoadScene("Scene 2", LoadSceneMode.Additive);
-        //}
     }
 }

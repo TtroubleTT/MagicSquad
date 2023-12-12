@@ -14,4 +14,11 @@ public class EnemyKills : MonoBehaviour
         _kills += amount;
         text.SetText($"Kills: {_kills}");
     }
+
+    public void SaveData()
+    {
+        PlayerPrefs.SetFloat("Kills", _kills);
+    }
+    
+    
 }
