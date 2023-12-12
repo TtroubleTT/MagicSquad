@@ -11,6 +11,7 @@ public class SoulStrike : MonoBehaviour, ICombat
     [Header("References")]
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform cam;
+    [SerializeField] private GameObject soulStrikePrefab;
 
     [Header("Attack")] 
     [SerializeField] private float damage = 50f;
@@ -40,7 +41,10 @@ public class SoulStrike : MonoBehaviour, ICombat
     public void Attack()
     {
         _audioManager.PlaySoundEffect(AudioManager.AudioType.CloseAttack);
-        bool hitEnemy = Physics.BoxCast(cam.position, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, cam.rotation, attackDistance, enemyLayer);
+        Vector3 camPos = cam.position;
+        Quaternion camRot = cam.rotation;
+        Instantiate(soulStrikePrefab, camPos + cam.forward + (cam.right * 0.5f) - cam.up, camRot);
+        bool hitEnemy = Physics.BoxCast(camPos, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, camRot, attackDistance, enemyLayer);
         if (hitEnemy)
         {
             // If there is a better way to do this please tell me
