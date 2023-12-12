@@ -8,7 +8,14 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject playerUI;
 
-    void Update()
+    private EnemyKills _enemyKills;
+
+    private void Start()
+    {
+        _enemyKills = GameObject.FindGameObjectWithTag("KillUI").GetComponent<EnemyKills>();
+    }
+    
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -24,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     }
 
-    void Pause()
+    private void Pause()
     {
         pauseMenuUI.SetActive(true);
         playerUI.SetActive(false);
@@ -35,6 +42,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Home()
     {
+        _enemyKills.SaveData();
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;
     }
@@ -50,6 +58,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart()
     {
+        _enemyKills.SaveData();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;

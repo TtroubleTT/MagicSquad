@@ -12,6 +12,7 @@ TagManager:
   - HealthBar
   - Crosshair
   - KillUI
+  - AudioManager
   layers:
   - Default
   - TransparentFX
