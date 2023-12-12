@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +10,11 @@ public class EnemyKills : MonoBehaviour
     [SerializeField] private TMP_Text text;
     private float _kills;
 
+    private void Start()
+    {
+        LoadData();
+    }
+
     public void AddKillAmount(float amount)
     {
         _kills += amount;
@@ -17,8 +23,13 @@ public class EnemyKills : MonoBehaviour
 
     public void SaveData()
     {
+        Debug.Log(_kills);
         PlayerPrefs.SetFloat("Kills", _kills);
     }
-    
-    
+
+    public void LoadData()
+    {
+        _kills = PlayerPrefs.GetFloat("Kills");
+        text.SetText($"Kills: {_kills}");
+    }
 }
