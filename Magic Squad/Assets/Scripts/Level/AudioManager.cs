@@ -11,6 +11,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip walking;
     public AudioClip takingDamage;
     public AudioClip gainSoul;
+    public AudioClip dash;
+    public AudioClip enemyDeath;
+    public AudioClip heal;
+    public AudioClip closeAttack;
+    public AudioClip projectile;
 
     private void Start()
     {
