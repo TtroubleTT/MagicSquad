@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Home()
     {
+        GameIsPause = false;
         _enemyKills.SaveData();
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;

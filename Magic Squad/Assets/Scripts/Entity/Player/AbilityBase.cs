@@ -18,6 +18,9 @@ public abstract class AbilityBase : MonoBehaviour
 
     protected virtual bool DoAbility()
     {
+        if (PauseMenu.GameIsPause)
+            return false;
+        
         bool canDoAbility = _soulManager.SubtractSoul(SoulCost);
 
         if (!canDoAbility)
