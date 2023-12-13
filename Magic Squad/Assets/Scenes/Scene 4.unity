@@ -15034,6 +15034,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box cap (39)
       objectReference: {fileID: 0}
+    - target: {fileID: 1661289290001598, guid: ec267ebad9ef10c45bc6b17ee8de56c4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4235035171915714, guid: ec267ebad9ef10c45bc6b17ee8de56c4, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.2115
