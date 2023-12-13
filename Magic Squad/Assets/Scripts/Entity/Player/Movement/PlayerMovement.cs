@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchYScale;
     private float _startYScale;
     private bool _isCrouching = false;
+    private double fallTime = 0.0;
+    private bool jumped = false;
 
     // Movement States
     [HideInInspector] public MovementState movementState;
@@ -54,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         WallRunning,
         Crouching,
         Air,
+        Falling,
     }
     
     // Code has been inspired and modified a bit based on these tutorials
@@ -124,7 +127,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            movementState = MovementState.Air;
+            if (fallTime < 0.25 && !jumped)
+            {
+                movementState = MovementState.Falling;
+                fallTime += Time.deltaTime;
+            }
+            else
+                movementState = MovementState.Air;
         }
     }
 
@@ -136,6 +145,8 @@ public class PlayerMovement : MonoBehaviour
         // Makes it so we arent changing velocity when on ground not falling
         if (_isGrounded && velocity.y < 0)
         {
+            jumped = false;
+            fallTime = 0.0;
             _canDoubleJump = true;
             velocity.y = -2f;
         }
@@ -154,19 +165,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {
-        // Physics stuff for jumping
-        if (Input.GetKeyDown(jumpKey) && _isGrounded && movementState != MovementState.Crouching)
+        if (Input.GetKeyDown(jumpKey))
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        if (Input.GetKeyDown(jumpKey) && movementState == MovementState.Air && _canDoubleJump && !_wallRunning.isWallJumping)
-        {
-            _canDoubleJump = false;
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            Debug.Log($"Grounded: {_isGrounded} State: {movementState} | Double: {_canDoubleJump} Wall: {_wallRunning.isWallJumping}");
+            switch (_isGrounded || movementState == MovementState.Falling)
+            {
+                case true when movementState != MovementState.Crouching:
+                    jumped = true;
+                    DoJump();
+                    break;
+                case false when movementState is MovementState.Air or MovementState.Falling && _canDoubleJump && !_wallRunning.isWallJumping:
+                    _canDoubleJump = false;
+                    DoJump();
+                    break;
+            }
         }
     }
 
+    private void DoJump() => velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    
     private bool IsUnderObject()
     {
         float heightAbove = controller.height - crouchYScale; // height length between full stand and crouch

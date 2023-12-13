@@ -40,11 +40,14 @@ public class SoulStrike : MonoBehaviour, ICombat
 
     public void Attack()
     {
+        if (PauseMenu.GameIsPause)
+            return;
+        
         _audioManager.PlaySoundEffect(AudioManager.AudioType.CloseAttack);
         Vector3 camPos = cam.position;
         Quaternion camRot = cam.rotation;
-        Instantiate(soulStrikePrefab, camPos + cam.forward + (cam.right * 0.5f) - cam.up, camRot);
-        bool hitEnemy = Physics.BoxCast(camPos, new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, camRot, attackDistance, enemyLayer);
+        GameObject pref = Instantiate(soulStrikePrefab, camPos + cam.forward + (cam.right * 0.5f) - cam.up, camRot) as GameObject;
+        bool hitEnemy = Physics.BoxCast(camPos + (-cam.forward * 2.5f), new Vector3(attackWidth, attackWidth, attackWidth), cam.forward, out RaycastHit hitInfo, camRot, attackDistance, enemyLayer);
         if (hitEnemy)
         {
             // If there is a better way to do this please tell me
