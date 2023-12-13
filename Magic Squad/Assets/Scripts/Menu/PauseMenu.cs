@@ -62,6 +62,7 @@ public class PauseMenu : MonoBehaviour
         _enemyKills.SaveData();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+        GameIsPause = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 

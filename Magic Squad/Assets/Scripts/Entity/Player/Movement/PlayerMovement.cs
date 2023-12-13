@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (fallTime < 0.25 && !jumped)
+            if (fallTime < 0.35 && !jumped)
             {
                 movementState = MovementState.Falling;
                 fallTime += Time.deltaTime;
@@ -167,7 +167,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(jumpKey))
         {
-            Debug.Log($"Grounded: {_isGrounded} State: {movementState} | Double: {_canDoubleJump} Wall: {_wallRunning.isWallJumping}");
             switch (_isGrounded || movementState == MovementState.Falling)
             {
                 case true when movementState != MovementState.Crouching:
