@@ -225,11 +225,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   cam: {fileID: 5303126048535765995}
+  soulStrikePrefab: {fileID: 3810348480074086707, guid: 83dcc71d7fe5a8c46b887c99eeca9d63, type: 3}
   damage: 50
-  attackDistance: 6
+  attackDistance: 10
   attackWidth: 2.5
   attackKey: 323
-  cooldown: 1
+  cooldown: 0.5
 --- !u!114 &8872730403723145126
 MonoBehaviour:
   m_ObjectHideFlags: 0
